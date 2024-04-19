@@ -6,15 +6,13 @@ import "../styles/FormLogin.css";
 import logo from "./logo.png";
 import doctor from "./doctor.png";
 import axios from "axios"; // Importez Axios
-
+import RegisterPatient from "../pages/RegisterPatient";
 function FormLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [idmed_id, setIdmed] = useState(null);
   const [loading, setLoading] = useState(false); // Ajout de loading
   const navigate = useNavigate();
-
-  
-       
 
        const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,12 +24,15 @@ function FormLogin() {
           console.log('API Response:', res.data);
           // Vérifier si la réponse contient les clés attendues
           if ('role' in res.data) {
-            // localStorage.setItem(ACCESS_TOKEN, res.data.access);
-            // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+             //localStorage.setItem(ACCESS_TOKEN, res.data.access);
+             //localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       
             // Rediriger en fonction du rôle de l'utilisateur
             if (res.data.role === 'MEDECIN') {
-              navigate('/home_medecin');
+              navigate('/home_medecin', { state: { idmed_id: res.data.idmed_id } });
+              console.log('ID du médecin:', res.data.idmed_id);
+              setIdmed(res.data.idmed_id);
+            
   
             } else if (res.data.role === 'PATIENT') {
               navigate('/home_patient');
@@ -79,7 +80,9 @@ function FormLogin() {
             </div>
           </form>
         </div>
+        
       </div>
+      
     </div>
   );
 }

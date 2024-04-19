@@ -5,6 +5,7 @@ import Register from "./pages/Register"
 import HomeMedecin from "./pages/HomeMedecin"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
+import RegisterPatient from "./pages/RegisterPatient"
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -33,6 +34,8 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/login/registerpatient/:medecinId" element={<RegisterPatient />} />
+        <Route path="/home_medecin" element={<HomeMedecin />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />}></Route>

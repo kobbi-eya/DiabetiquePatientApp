@@ -21,7 +21,7 @@ const FormRegisterMed = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 // Supprimer le temps et les millisecondes de la date
 
-  const handleInputChange = (e) => {
+  const handleMedecinInputChange = (e) => {
     setMedecin({ ...medecin, [e.target.name]: e.target.value });
   };
 
@@ -29,13 +29,14 @@ const FormRegisterMed = () => {
     const dateSansHeure = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     setMedecin({ ...medecin, date_de_naissance:dateSansHeure });
   };
-
-  const handleSubmit = async (e) => {
+  
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const dateFormatted = `${medecin.date_de_naissance.getFullYear()}-${(medecin.date_de_naissance.getMonth() + 1).toString().padStart(2, '0')}-${medecin.date_de_naissance.getDate().toString().padStart(2, '0')}`;
+      console.log("Données du formulaire :", medecin);
       const response = await api.post('/api/user/register/', {
         nom: medecin.nom,
         prenom: medecin.prenom,
@@ -87,7 +88,7 @@ const FormRegisterMed = () => {
                   id="nom"
                   name="nom"
                   value={medecin.nom}
-                  onChange={handleInputChange}
+                  onChange={handleMedecinInputChange}
                 />
               </label>
               <label>
@@ -97,7 +98,7 @@ const FormRegisterMed = () => {
                   id="prenom"
                   name="prenom"
                   value={medecin.prenom}
-                  onChange={handleInputChange}
+                  onChange={handleMedecinInputChange}
                 />
               </label>
               <label>
@@ -116,7 +117,7 @@ const FormRegisterMed = () => {
                   id="mobile"
                   name="mobile"
                   value={medecin.mobile}
-                  onChange={handleInputChange}
+                  onChange={handleMedecinInputChange}
                 />
               </label>
             </div>
@@ -128,7 +129,7 @@ const FormRegisterMed = () => {
                   id="specialite"
                   name="specialite"
                   value={medecin.specialite}
-                  onChange={handleInputChange}
+                  onChange={handleMedecinInputChange}
                 />
               </label>
               <label>
@@ -138,7 +139,7 @@ const FormRegisterMed = () => {
                   id="email"
                   name="email"
                   value={medecin.email}
-                  onChange={handleInputChange}
+                  onChange={handleMedecinInputChange}
                 />
               </label>
               <div>

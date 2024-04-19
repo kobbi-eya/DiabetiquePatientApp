@@ -50,4 +50,16 @@ class medecin(users):
         return f"{self.nom} {self.prenom}"
 
 
+class patient(users): 
+    poids = models.FloatField(null=False,default=0.0)
+    taille = models.FloatField(null=False,default=0.0)
+    mobile = models.IntegerField(null=False, default=0)
+    allergies = models.CharField(max_length=50,default="")
+    groupe_sanguin = models.CharField(max_length=5,default="")
+    idmed = models.ForeignKey(medecin, on_delete=models.CASCADE,db_column='idmed_id')
+    date_de_naissance = models.DateField(null=False,default="")
+    type_diabete = models.CharField(max_length=10,default="")
+    sexe = models.CharField(max_length=10,default="")
+    def __str__(self):
+        return f"{self.nom} {self.prenom}"
 
