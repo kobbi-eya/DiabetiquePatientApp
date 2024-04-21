@@ -6,9 +6,11 @@ from django.contrib.auth import authenticate, login
 from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
-from .models import patient, users  # Importez votre modèle utilisateur personnalisé
+from .models import consultations, patient, users  # Importez votre modèle utilisateur personnalisé
 from .models import medecin
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def validate_password(password):
     """
@@ -110,6 +112,25 @@ def register_medecin(request):
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
     
 
+"""def send_password_email(recipient_email, password):
+    # Configuration de l'e-mail
+    sender_email = "votre_email@gmail.com"  # Modifier avec votre adresse e-mail
+    subject = "Votre mot de passe pour le portail du patient"
+    body = f"Bonjour,\n\nVoici votre mot de passe pour accéder au portail du patient : {password}\n\nCordialement,\nVotre médecin"
+
+    # Création du message
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = recipient_email
+    message['Subject'] = subject
+
+    # Ajout du corps du message
+    message.attach(MIMEText(body, 'plain'))
+
+    # Connexion au serveur SMTP et envoi de l'e-mail
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+        server.login(sender_email, 'votre_mot_de_passe')  # Modifier avec votre mot de passe
+        server.send_message(message)"""      
 
 
 @csrf_exempt
@@ -173,11 +194,89 @@ def register_patient_by_medecin(request):
             )
             new_patient.set_password(password)
             new_patient .save()
-
+            # Envoi de l'e-mail contenant le mot de passe au patient
+            #send_password_email(new_patient.email,new_patient.password)
             return JsonResponse({'redirect': '/home_medecin', "success": True})
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+
+from datetime import datetime, timedelta           
+@csrf_exempt
+def create_rendez_vous(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            email = data.get('email')
+            idmede = data.get('idmed')
+            date_consultation = data.get('dateConsultation')
+            heure_consultation = data.get('heureConsultation')
+            notes = data.get('notes')
+            idpat = data.get('idpat')
+            print("Received data:", data)
+            print("Type of idmede:", type(idmede))
+
+            patient_obj = patient.objects.get(email=email)
+            idpat = patient_obj.idusers
+            print("Type of patient_obj.idmed_id:", type(patient_obj.idmed_id))
+            # Convert idmede to integer
+            idmede = int(idmede)
+
+            # Vérifier que toutes les données requises sont fournies
+            if not all([idmede, idpat, date_consultation, heure_consultation, notes]):
+                return JsonResponse({"error": "Veuillez fournir tous les champs requis."}, status=400)
+
+            print(idpat)
+            # Vérifier si le patient associé au rendez-vous est bien celui du médecin connecté
+            if patient_obj.idmed_id != idmede:
+                print("patient_obj.idmed_id:", patient_obj.idmed_id)
+                print("idmede:", idmede)
+                return JsonResponse({"error": "Vous n'êtes pas autorisé à créer un rendez-vous pour ce patient."}, status=403)
             
-   
-        
+
+            date_consultation = datetime.strptime(date_consultation, '%Y-%m-%d').date()
+
+            # Convertir l'heure de consultation en objet datetime.time
+            heure_consultation = datetime.strptime(heure_consultation, '%H:%M').time()
+
+
+            # Vérifier s'il existe déjà un rendez-vous pour le même patient à la même date et à la même heure
+            existing_rendez_vous_same_time = consultations.objects.filter(
+                idpat=idpat,
+                date_consultation=date_consultation,
+                heure_consultation=heure_consultation
+            ).exists()
+            if existing_rendez_vous_same_time:
+                return JsonResponse({"error": "Ce créneau est déjà pris pour ce patient."}, status=400)
+           
+            # Filtrer tous les rendez-vous existants pour le même patient et la même date de consultation
+            existing_rendez_vous_same_day = consultations.objects.filter(
+              idpat=idpat,
+              date_consultation=date_consultation,
+            )
+
+           # Vérifier l'intervalle de 20 minutes entre le nouveau rendez-vous et les rendez-vous existants sur le même jour
+            current_rendez_vous_datetime = datetime.combine(date_consultation, heure_consultation)
+            for rendez_vous in existing_rendez_vous_same_day:
+               rendez_vous_datetime = datetime.combine(rendez_vous.date_consultation, rendez_vous.heure_consultation)
+               interval = current_rendez_vous_datetime - rendez_vous_datetime
+               if interval.total_seconds() < 0 and abs(interval.total_seconds()) < 20 * 60:
+                  return JsonResponse({"error": "Il doit y avoir un intervalle de 20 minutes minimum entre les rendez-vous sur le même jour."}, status=400)
+
+
+
+
+            rendez_vous = consultations.objects.create(
+                idpat_id=idpat,
+                idmede_id=idmede,
+                date_consultation=date_consultation,
+                heure_consultation=heure_consultation,
+            )
+            rendez_vous.save()
+
+            return JsonResponse({'redirect': '/home_medecin',"success": True})
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+ 

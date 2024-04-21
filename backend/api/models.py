@@ -63,3 +63,17 @@ class patient(users):
     def __str__(self):
         return f"{self.nom} {self.prenom}"
 
+class consultations(models.Model):
+    idconsultations = models.AutoField(primary_key=True)
+    idpat = models.ForeignKey(patient, on_delete=models.CASCADE)
+    idmede = models.ForeignKey(medecin, on_delete=models.CASCADE)
+    date_consultation = models.DateField(null=False,default="")
+    heure_consultation = models.TimeField(null=False, default=None)
+    ordonnance = models.TextField(default="")
+    description = models.TextField(default="")
+    bilan = models.TextField(default="")
+
+    def __str__(self):
+        return f"Consultation ID: {self.idconsultations}, Patient: {self.idpat.nom} {self.idpat.prenom}, Medecin: {self.idmede.nom} {self.idmede.prenom}, Date: {self.date_consultation}"
+    def get_absolute_url(self):
+        return reverse('consultation_detail', args=[str(self.idconsultations)])

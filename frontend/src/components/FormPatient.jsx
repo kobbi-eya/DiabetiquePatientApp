@@ -66,7 +66,7 @@ const FormPatient = ({medecinId}) => {
       if (response.data.success) {
         //const idmed = response.data.idmed;
         //console.log('Identifiant du médecin:', idMedecin);
-        navigate('/home_medecin');
+        navigate('/home_medecin',{ state: { idmed_id: medecinId} });
       } else {
         console.error("L'inscription a échoué.");
       }
