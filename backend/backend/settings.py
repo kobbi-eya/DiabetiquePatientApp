@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)2+5r4s#n4gn5x)$8u+#7x#v3mki5r#w=82443l0r%5id=oa^+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -155,8 +155,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True
+#CORS_ALLOW_ALL_ORIGINS = False
+#CORS_ALLOWED_ORIGINS = [
+  #  'http://localhost:5173',  # Remplacez ceci par l'URL de votre application React
+#    'http://localhost:8000',  # URL du serveur Django
+#]
+
+
 CORS_ALLOWS_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+]
 
 CORS_ALLOW_METHODS = [
     'GET',
@@ -165,4 +174,15 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'DELETE',
     'OPTIONS'  # Cette méthode est généralement incluse pour gérer les pré-vérifications CORS
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]

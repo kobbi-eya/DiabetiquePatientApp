@@ -1,391 +1,193 @@
 .container {
-    background-color: #ffffff;
-    padding: 0px;
-  }
+  background-color: #ffffff;
+  padding: 0px;
+}
+
+
+
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  padding: 5px;
+  cursor: pointer;
   
-  
-  
-  
+}
+
+.menu-toggle {
+  display: none; /* Cachez le bouton de menu par défaut */
+}
+@media only screen and (max-width: 768px) {
   .nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    display: none; /* Cachez les données de la barre de navigation sur les petits écrans */
   }
-  
-  .nav-menu li {
-    padding: 5px;
-    cursor: pointer;
-    
-  }
-  
+
   .menu-toggle {
-    display: none; /* Cachez le bouton de menu par défaut */
+    display: block; /* Affichez le bouton de menu sur les petits écrans */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1.3em;
   }
-  @media only screen and (max-width: 768px) {
-    .nav-menu {
-      display: none; /* Cachez les données de la barre de navigation sur les petits écrans */
-    }
+
+  .menu-toggle:focus {
+    outline: none;
+  }
+  .nav-menu.open {
+    display: block;
+    position: absolute;
+    top: 55px; /* Ajustez la position verticale du menu déroulant selon votre mise en page */
+    left: 0;
+    background: linear-gradient(to bottom, rgba(196, 2, 212, 0.7), rgba(31, 223, 217, 0.7));
+    width: 30%;
+    
+  }
   
-    .menu-toggle {
-      display: block; /* Affichez le bouton de menu sur les petits écrans */
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #ffffff;
-      font-size: 1.3em;
-    }
-  
-    .menu-toggle:focus {
-      outline: none;
-    }
-    .nav-menu.open {
-      display: block;
-      position: absolute;
-      top: 55px; /* Ajustez la position verticale du menu déroulant selon votre mise en page */
-      left: 0;
-      background: linear-gradient(to bottom, rgba(196, 2, 212, 0.7), rgba(31, 223, 217, 0.7));
-      width: 30%;
-      
-    }
-    
-    .nav-menu.open li {
-      padding: 10px;
-      text-align: left;
-      margin-left: 10px;
-    }
-    nav {
-      background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-      color: #ffffff;
-      text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .title_rv{
-      font-size: 32px;
-      padding: 10px;
-      margin-top: 30px;
-      margin-left:25px;
-      color: #47194E;
-    
-    }
-    
-    .createrv {
-      width: 230px;
-      height: 470px;
-      position: absolute;
-      top: 60px; /* Peut être ajusté si nécessaire */
-      right: 5px;
-    }
-    
-    .sous_container {
-      background-color: #e1e1e17a;
-      padding: 0px;
-      margin-right: 140px;
-      margin-left: 5px;
-      border-radius: 15px;
-      margin-top: 30px;
-    }
-    
-    .format {
-      display: flex;
-    }
-    
-    .right {
-      width: calc(5% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: right; /* Aligner à gauche */
-      margin-right: 1px; /* Espacement entre la partie gauche et la partie droite */
-      
-    }  
-    .left {
-      width: calc(83% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: left ; /* Aligner à droite */
-      margin-left:1px; /* Espacement entre la partie gauche et la partie droite */
-      
-    
+  .nav-menu.open li {
+    padding: 10px;
+    text-align: left;
+    margin-left: 10px;
+  }
+  nav {
+    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title_rv{
+    font-size: 32px;
+    padding: 10px;
+    margin-top: 30px;
+    margin-left:25px;
+    color: #47194E;
   
   }
   
-    
-    form {
-      margin-top: 10px;
-      margin-left: 5px;
-      margin-right: 10px;
-    }
-    
-    label {
-      
-      margin-left: 7px;
-      display: block;
-      margin-bottom: 18px;
-      font-size: 17px;
-      color: #2c0c5a;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    
-    label::after {
-      content: '';
-      display: block;
-      width: 95%;
-      height: 0.75px;
-      background-color: #3385b591;
-      margin-top: 0px;
-      margin-left: 5px;
-    }
-    
-    label:hover::after {
-      background-color: #fa20eff0;
-      transition: background-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input [type = "number"],
-    input[type="time"],
-    input[type="email"],
-    select,
-    textarea {
-      width: calc(100% - 14px);
-      padding: 7px;
-      border: 1px solid #cccccc80;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input [type = "number"],
-    input[type="time"],
-    input[type="email"],:focus,
-    select,:focus,
-    textarea,:focus {
-      outline: none;
-      border-color: #43aedc;
-    }
-    input[type="text"],
-    input [type = "number"],
-    input[type="time"],
-    input[type="email"],
-    .react-datepicker__input-container input {
-      font-size: 15px; /* Augmentez la taille de la police */
-      padding: 9px; /* Augmentez l'espacement interne */
+  .createrv {
+    width: 230px;
+    height: 470px;
+    position: absolute;
+    top: 60px; /* Peut être ajusté si nécessaire */
+    right: 5px;
   }
-    .react-datepicker-wrapper {
-      width: 100%;
-      
-    }
-    
-    .react-datepicker-popper {
-      margin-left: 30px;
-    }
-    
-     
-    .cancel-button {
-      font-size: 14px;
-      margin-top: 10px;
-        position: absolute;
-        right: 170px;
-        background-color: #C402D4; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .cancel-button:hover {
-        font-size: 15px;
   
-        background-color: #e4242a; /* Changement de couleur au survol */
-      }
-       
-      .confirm-button {
-        margin-top: 10px;
-      
-        font-size: 14px;
-        position: absolute;
-        right: 325px;
-        background-color: #0cb2ac; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .confirm-button:hover {
-        font-size: 15px;
-        background-color: #16b556; /* Changement de couleur au survol */
-      }
-     
+  .sous_container {
+    background-color: #e1e1e17a;
+    padding: 0px;
+    margin-right: 140px;
+    margin-left: 5px;
+    border-radius: 15px;
+    margin-top: 30px;
+  }
+  
+  .format {
+    display: flex;
+  }
+  
+  .right {
+    width: calc(5% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: right; /* Aligner à gauche */
+    margin-right: 1px; /* Espacement entre la partie gauche et la partie droite */
     
+  }  
+  .left {
+    width: calc(83% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: left ; /* Aligner à droite */
+    margin-left:1px; /* Espacement entre la partie gauche et la partie droite */
     
-      .notes-textarea {
-        width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
-        height: 50px; /* Réglez la hauteur selon vos préférences */
-        resize: vertical; /* Autoriser le redimensionnement vertical */
-        margin-bottom: 0px; /* Espacement en bas */
-      }
+  
+
+}
+
+  
+  form {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  
+  label {
     
+    margin-left: 7px;
+    display: block;
+    margin-bottom: 18px;
+    font-size: 17px;
+    color: #2c0c5a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  label::after {
+    content: '';
+    display: block;
+    width: 95%;
+    height: 0.75px;
+    background-color: #3385b591;
+    margin-top: 0px;
+    margin-left: 5px;
+  }
+  
+  label:hover::after {
+    background-color: #fa20eff0;
+    transition: background-color 0.3s ease;
+  }
+  
+  input[type="text"],
+  input [type = "number"],
+  input[type="time"],
+  input[type="email"],
+  select,
+  textarea {
+    width: calc(100% - 14px);
+    padding: 7px;
+    border: 1px solid #cccccc80;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"],
+  input [type = "number"],
+  input[type="time"],
+  input[type="email"],:focus,
+  select,:focus,
+  textarea,:focus {
+    outline: none;
+    border-color: #43aedc;
+  }
+  input[type="text"],
+  input [type = "number"],
+  input[type="time"],
+  input[type="email"],
+  .react-datepicker__input-container input {
+    font-size: 15px; /* Augmentez la taille de la police */
+    padding: 9px; /* Augmentez l'espacement interne */
+}
+  .react-datepicker-wrapper {
+    width: 100%;
+    
+  }
+  
+  .react-datepicker-popper {
+    margin-left: 30px;
+  }
+  
    
-  }
-  
-  @media only screen and (min-width : 768px ) {
-    
-    nav ul {
-      display: flex;
-      list-style: none;
-      margin: 0px;
-      padding: 0px;
-      justify-content: flex-end; /* Alignement des éléments à droite */
-  
-    }
-  
-    nav li {
-      margin-right:60px;
-      font-size: 18.5px;
-      padding: 50px;
-      cursor: pointer;
-    }
-    nav {
-      background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-      color: #ffffff;
-      text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.5);
-      padding: 15px;
-     
-    }
-    .title_rv{
-      font-size: 34px;
-      padding: 10px;
-      margin-top: 30px;
-      margin-left:25px;
-      color: #47194E;
-    
-    }
-    
-    
-    .notes-textarea {
-    
-      width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
-      height: 80px; /* Réglez la hauteur selon vos préférences */
-      resize: vertical; /* Autoriser le redimensionnement vertical */
-      margin-bottom: 0px; /* Espacement en bas */
-    }
-    
-    .sous_container {
-      
-      background-color: #e1e1e17a;
-      padding: 5px;
-      margin-right:200px;
-      margin-left: 15px;
-      border-radius: 15px;
-      margin-top: 40px;
-     
-    }
-    .right {
-      width: calc(10% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: right; /* Aligner à gauche */
-      margin-right: 10px; /* Espacement entre la partie gauche et la partie droite */
-      
-    }  
-    .left {
-      width: calc(90% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: left ; /* Aligner à droite */
-      margin-left:10px; /* Espacement entre la partie gauche et la partie droite */
-      
-    
-  
-  }
-    
-    form {
-    
-      margin-top: 10px;
-      margin-left:10px;
-      margin-right:32px;
-    
-    }
-    
-    
-    label {
-      display: block;
-      margin-bottom: 15px;
-      
-      font-size: 18px;
-      color: #2c0c5a;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    
-    label::after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 0.75px;
-      background-color: #3385b591;
-      margin-top: 0px;
-      margin-left: 5px;
-    
-    }
-    
-    label:hover::after {
-      background-color: #fa20eff0;
-      transition: background-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input[type="time"],
-    input[type="email"],
-    input [type = "number"],
-    select,
-    textarea {
-      font-size: 15px; /* Augmentez la taille de la police */
-  
-      width: 100%;
-      padding: 7px;
-      border: 1px solid #cccccc80;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-    }
-    
-    
-    input[type="text"],
-    input [type = "number"],
-    input[type="time"],
-    input[type="email"],:focus,
-    select,:focus,
-    textarea,:focus {
-      outline: none;
-      border-color: #43aedc;
-    }
-  
-    input[type="text"],
-    input [type = "number"],
-    input[type="time"],
-    input[type="email"],
-    .react-datepicker__input-container input {
-        font-size: 15px; /* Augmentez la taille de la police */
-        padding: 9px; /* Augmentez l'espacement interne */
-    }
-  
-    .react-datepicker-wrapper {
-      width: 100%;
-    }
-    
-    .react-datepicker-popper {
-    
-    }
-    
-    
-    
-    .cancel-button {
-      font-size: 16px;
+  .cancel-button {
+    font-size: 14px;
+    margin-top: 10px;
       position: absolute;
-      bottom: 15px;
-      right: 30px;
+      right: 170px;
       background-color: #C402D4; /* Couleur de fond */
       color: white; /* Couleur du texte */
-      padding: 10px 40px; /* Espacement interne */
+      padding: 10px 50px; /* Espacement interne */
       border: none; /* Pas de bordure */
       border-radius: 5px; /* Coins arrondis */
       cursor: pointer; /* Curseur pointeur */
@@ -393,20 +195,20 @@
     }
     
     .cancel-button:hover {
-      font-size: 17px;
-  
+      font-size: 15px;
+
       background-color: #e4242a; /* Changement de couleur au survol */
     }
      
     .confirm-button {
-      font-size: 16px;
-  
+      margin-top: 10px;
+    
+      font-size: 14px;
       position: absolute;
-      bottom: 15px;
-      right: 171px;
+      right: 325px;
       background-color: #0cb2ac; /* Couleur de fond */
       color: white; /* Couleur du texte */
-      padding: 10px 40px; /* Espacement interne */
+      padding: 10px 50px; /* Espacement interne */
       border: none; /* Pas de bordure */
       border-radius: 5px; /* Coins arrondis */
       cursor: pointer; /* Curseur pointeur */
@@ -414,18 +216,216 @@
     }
     
     .confirm-button:hover {
-      font-size: 17px;
-  
+      font-size: 15px;
       background-color: #16b556; /* Changement de couleur au survol */
     }
-    .createrv  {
-      width: 300px;
-      height: 500px;
-      position: absolute;
-      top: 80px; /* Peut être ajusté si nécessaire */
-      right: 10px;
-       
-     
+   
+  
+  
+    .notes-textarea {
+      width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
+      height: 50px; /* Réglez la hauteur selon vos préférences */
+      resize: vertical; /* Autoriser le redimensionnement vertical */
+      margin-bottom: 0px; /* Espacement en bas */
     }
-  }  
+  
+ 
+}
+
+@media only screen and (min-width : 768px ) {
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    justify-content: flex-end; /* Alignement des éléments à droite */
+
+  }
+
+  nav li {
+    margin-right:60px;
+    font-size: 18.5px;
+    padding: 50px;
+    cursor: pointer;
+  }
+  nav {
+    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+   
+  }
+  .title_rv{
+    font-size: 34px;
+    padding: 10px;
+    margin-top: 30px;
+    margin-left:25px;
+    color: #47194E;
+  
+  }
+  
+  
+  .notes-textarea {
+  
+    width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
+    height: 80px; /* Réglez la hauteur selon vos préférences */
+    resize: vertical; /* Autoriser le redimensionnement vertical */
+    margin-bottom: 0px; /* Espacement en bas */
+  }
+  
+  .sous_container {
     
+    background-color: #e1e1e17a;
+    padding: 5px;
+    margin-right:200px;
+    margin-left: 15px;
+    border-radius: 15px;
+    margin-top: 40px;
+   
+  }
+  .right {
+    width: calc(10% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: right; /* Aligner à gauche */
+    margin-right: 10px; /* Espacement entre la partie gauche et la partie droite */
+    
+  }  
+  .left {
+    width: calc(90% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: left ; /* Aligner à droite */
+    margin-left:10px; /* Espacement entre la partie gauche et la partie droite */
+    
+  
+
+}
+  
+  form {
+  
+    margin-top: 10px;
+    margin-left:10px;
+    margin-right:32px;
+  
+  }
+  
+  
+  label {
+    display: block;
+    margin-bottom: 15px;
+    
+    font-size: 18px;
+    color: #2c0c5a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  label::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0.75px;
+    background-color: #3385b591;
+    margin-top: 0px;
+    margin-left: 5px;
+  
+  }
+  
+  label:hover::after {
+    background-color: #fa20eff0;
+    transition: background-color 0.3s ease;
+  }
+  
+  input[type="text"],
+  input[type="time"],
+  input[type="email"],
+  input [type = "number"],
+  select,
+  textarea {
+    font-size: 15px; /* Augmentez la taille de la police */
+
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #cccccc80;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  
+  input[type="text"],
+  input [type = "number"],
+  input[type="time"],
+  input[type="email"],:focus,
+  select,:focus,
+  textarea,:focus {
+    outline: none;
+    border-color: #43aedc;
+  }
+
+  input[type="text"],
+  input [type = "number"],
+  input[type="time"],
+  input[type="email"],
+  .react-datepicker__input-container input {
+      font-size: 15px; /* Augmentez la taille de la police */
+      padding: 9px; /* Augmentez l'espacement interne */
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  
+  .react-datepicker-popper {
+  
+  }
+  
+  
+  
+  .cancel-button {
+    font-size: 16px;
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+    background-color: #C402D4; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 40px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+  
+  .cancel-button:hover {
+    font-size: 17px;
+
+    background-color: #e4242a; /* Changement de couleur au survol */
+  }
+   
+  .confirm-button {
+    font-size: 16px;
+
+    position: absolute;
+    bottom: 15px;
+    right: 171px;
+    background-color: #0cb2ac; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 40px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+  
+  .confirm-button:hover {
+    font-size: 17px;
+
+    background-color: #16b556; /* Changement de couleur au survol */
+  }
+  .createrv  {
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    top: 80px; /* Peut être ajusté si nécessaire */
+    right: 10px;
+     
+   
+  }
+}  
+  

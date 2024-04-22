@@ -37,7 +37,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login/registerpatient/:medecinId" element={<RegisterPatient />} />
         <Route path="/login/CreateRv/:medecinId" element={<CreateRv />} />
-        <Route path="/home_medecin" element={<HomeMedecin />} />
+        <Route path="/login/home_medecin/:medecinId" element={<HomeMedecin />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />}></Route>

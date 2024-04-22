@@ -1,0 +1,165 @@
+nav {
+    background: linear-gradient(
+      to bottom right,
+      rgba(196, 2, 212, 0.67),
+      rgba(31, 223, 217, 0.67)
+    );
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0; /* Modifier pour éviter les marges indésirables */
+  }
+  
+  nav li {
+    margin: 0px 20px; /* Réduire la marge pour un aspect plus compact */
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .carnet-medical {
+    font-size: 18px;
+    padding: 1px;
+    margin-top: 10px;
+    margin-left: 20px;
+    color: #47194e;
+  }
+  .calendrier-container {
+    background-color: #e4c1ee4e;
+    padding: 1px;
+  }
+  
+  h1 {
+    font-size: 27px;
+    color: #6d1e76;
+    margin-top: 40px;
+    margin-bottom: 70px;
+    margin-left: 25px;
+  }
+  
+  .rbc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  padding: 5px;
+    font-size: 20px;
+    color: #165484;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif, Impact, Haettenschweiler,
+      "Arial Narrow Bold", sans-serif;
+  }
+  
+  .rbc-btn-group {
+    display: flex;
+    align-items: center;
+   
+  }
+  
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0px;
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke: #333;
+    stroke-width: 2;
+    fill: none;
+  }
+  
+  button:hover svg {
+    stroke: #0f457f;
+  }
+  
+  .rbc-calendar {
+    width: 100%;
+    border: none;
+    
+    
+  }
+  
+  .rbc-header {
+    background-color: #22a2ec7a;
+  }
+  
+  .rbc-day-bg + .rbc-day-bg {
+    border-left: 1px solid #cccccc80;
+    
+  }
+  
+  .rbc-today {
+    background-color: #1e6d9f2e;
+  }
+  
+  .rbc-event {
+    border-radius: 5px;
+    padding: 2px 10px;
+    background-color: #0473eb;
+    color: #270a2b;
+  }
+  
+  
+  .rbc-event {
+    background-color: #799bd6ba;
+    
+  }
+  
+  .rbc-btn-group button {
+    font-size: 16px;
+    background:#7697c6ae;
+    border: none;
+    color: #a718c0;
+    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.4);
+    padding: 0.3rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 1.05rem;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    
+    
+   
+  }
+  .rbc-btn-group button:hover {
+      background: linear-gradient(
+          to bottom right,
+          rgba(196, 2, 212, 0.7),
+          rgba(31, 223, 217, 0.7)
+        );
+        color: #ffffff;
+        
+  }
+  .doctor,.doctor1 {
+       width: 100px; /* ajustez la taille selon vos besoins */
+      height: auto;
+      position: absolute;
+      top: 150px; /* ajustez la position en fonction de vos besoins */
+  }
+  .doctor{
+    left: 40px;
+    margin-top: 17px;
+      
+  }
+  .doctor1{
+      right: 40px;
+  }
+  .agenda {
+    width: 110px;
+    height: auto;
+    float: left;
+   
+  }
+  

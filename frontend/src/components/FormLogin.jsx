@@ -29,11 +29,10 @@ function FormLogin() {
       
             // Rediriger en fonction du rôle de l'utilisateur
             if (res.data.role === 'MEDECIN') {
-              navigate('/home_medecin', { state: { idmed_id: res.data.idmed_id } });
+              navigate(`/login/home_medecin/${res.data.idmed_id}`, { state: { idmed_id: res.data.idmed_id } });
               console.log('ID du médecin:', res.data.idmed_id);
               setIdmed(res.data.idmed_id);
             
-  
             } else if (res.data.role === 'PATIENT') {
               navigate('/home_patient');
             }

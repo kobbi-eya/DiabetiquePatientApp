@@ -280,3 +280,151 @@ def create_rendez_vous(request):
             return JsonResponse({"error": str(e)}, status=500)
 
  
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
+@require_http_methods(["GET", "OPTIONS"])
+def rendez_vous_medecin(request, idmed_id):
+    if request.method == 'GET':
+        try:
+            # Récupérer les rendez-vous (consultations) pour le médecin spécifié
+            rendez_vous = consultations.objects.filter(idmede_id=idmed_id, bilan='', ordonnance='')
+
+            # Serializer les rendez-vous si nécessaire
+            rendez_vous_data = [{'id': rv.idconsultations, 'date_consultation': rv.date_consultation, 'heure_consultation': rv.heure_consultation ,'idpat': rv.idpat.idusers } for rv in rendez_vous]
+            print(rendez_vous_data)
+            # Retourner les données sous forme de réponse JSON avec les en-têtes CORS appropriés
+            response = JsonResponse({'rendez_vous': rendez_vous_data}, safe=False)
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET"  # Spécifiez les méthodes HTTP autorisées
+            return response
+        except Exception as e:
+            # Gérer les erreurs et retourner une réponse d'erreur si nécessaire
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Si la méthode de requête n'est pas GET, renvoyer une réponse d'erreur
+        return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
+
+
+
+from django.http import JsonResponse
+from .models import patient
+
+from django.http import JsonResponse
+from .models import patient
+
+@require_http_methods(["GET", "OPTIONS"])
+def get_patient_info(request, patient_id):
+    if request.method == 'GET': 
+        try:
+            # Recherchez le patient par son ID
+            patient_obj = patient.objects.get(idusers=patient_id)
+            
+            # Serializer les données du patient si nécessaire
+            patient_data = {
+                'id': patient_obj.idusers,
+                'nom': patient_obj.nom,
+                'prenom': patient_obj.prenom,
+                'sexe': patient_obj.sexe,
+                'date_de_naissance': patient_obj.date_de_naissance,
+                'poids': patient_obj.poids,
+                'taille': patient_obj.taille,
+                'mobile': patient_obj.mobile,
+                'allergies': patient_obj.allergies,
+                'groupe_sanguin': patient_obj.groupe_sanguin,
+                'email': patient_obj.email,
+                # Ajoutez d'autres champs du modèle patient selon vos besoins
+            }
+            
+            # Retournez les données du patient sous forme de réponse JSON
+            return JsonResponse(patient_data)
+            
+        except patient.DoesNotExist:
+            # Si le patient n'existe pas, retournez une erreur 404
+            return JsonResponse({'error': 'Patient not found'}, status=404)
+        except Exception as e:
+            # Gérer les autres erreurs et retourner une réponse d'erreur
+            return JsonResponse({'error': str(e)}, status=500)
+        
+
+
+"""@require_http_methods(["GET"])
+def get_patient_par_medecin(request, idmedId):
+    if request.method == 'GET':
+        try:
+        
+            
+            # Récupérez tous les patients associés à ce médecin
+            patients = patient.objects.filter(idmed_id=idmedId)
+
+            
+            # Formatez les données des patients pour le JSON
+            patients_data = [{'id': pati.idusers,
+                  'nom': pati.nom,
+                  'prenom': pati.prenom,
+                  'sexe': pati.sexe,
+                  'date_de_naissance': pati.date_de_naissance,
+                  'poids': pati.poids,
+                  'taille': pati.taille,
+                  'mobile': pati.mobile,
+                  'allergies': pati.allergies,
+                  'groupe_sanguin': pati.groupe_sanguin,
+                  'email': pati.email,
+                  # Ajoutez d'autres champs du modèle patient selon vos besoins
+                 } for pati in patients]
+            print(patients_data)
+            # Retournez les données sous forme de réponse JSON avec les en-têtes CORS appropriés
+            response = JsonResponse({"patients": patients_data, "success": True})
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+            return response
+        except Exception as e:
+            return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
+    else:
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)"""
+
+"""@require_http_methods(["GET"])
+def get_patient_par_medecin(request, idmed_id):
+    print('1')
+    if request.method == 'GET':
+        try:
+            print('2')
+            print("Trying to retrieve doctor with ID:", idmed_id)
+            # Récupérez le médecin par ID
+            medecin_obj = medecin.objects.get(idusers=idmed_id)
+            print('3')
+            # Récupérez tous les patients associés à ce médecin
+            patients = patient.objects.filter(idmed=medecin_obj)
+            print('4')
+            # Formatez les données des patients pour le JSON
+            data = [
+                {
+                    "nom": p.nom,
+                    "prenom": p.prenom,
+                    "age": p.date_de_naissance.year,
+                    "poids": p.poids,
+                    "taille": p.taille,
+                    "groupe_sanguin": p.groupe_sanguin,
+                    "sexe": p.sexe,
+                }
+                for p in patients
+            ]
+            
+            response = JsonResponse({"patients": data, "redirect": "/liste_patient", "success": True})
+            response["Access-Control-Allow-Origin"] = "*"
+            response["Access-Control-Allow-Methods"] = "GET"
+            response["Access-Control-Allow-Headers"] = "Content-Type"
+            return response
+        
+        except medecin.DoesNotExist:
+            print("Médecin introuvable")
+            return JsonResponse({"error": "Médecin introuvable."}, status=404)
+        
+        except Exception as e:
+            print("An unexpected error occurred:", str(e))
+            return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
+    
+    else:
+        print("Invalid method")
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)"""

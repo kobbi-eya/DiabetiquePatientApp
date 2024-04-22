@@ -58,7 +58,7 @@ const FormRv = ({ medecinId }) => {
             console.log('Réponse de la création du rendez-vous :', response.data);
             // Redirection ou autre traitement après la création du rendez-vous
             if (response.data.success) {
-                navigate('/home_medecin', { state: { idmed_id: medecinId} });
+                navigate(`/login/home_medecin/${medecinId}`, { state: { idmed_id: medecinId } });
               } else {
                 console.error("L'inscription a échoué.");
               }
