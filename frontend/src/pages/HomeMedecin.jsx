@@ -9,7 +9,6 @@ function HomeMedecin() {
   const idmedId = state ? state.idmed_id : null;
   const navigate = useNavigate();
   const [rendezVousData, setRendezVousData] = useState([]);
-
   useEffect(() => {
     getRendezVous();
   }, [idmedId]);
@@ -64,9 +63,13 @@ function HomeMedecin() {
               <button className="create_rv_button" onClick={() => navigate(`/login/CreateRv/${idmedId}`)}>
                 Create a Rendez-vous
               </button>
+              <button className="list_patients_button" onClick={() => navigate(`/login/ListePatient/${idmedId}`)}>
+                List Patients
+              </button>
             </div>
           )}
         </div>
+    
       </div>
       {Array.isArray(rendezVousData) && <Calendrier rendezVousData={rendezVousData} />} 
     </div>

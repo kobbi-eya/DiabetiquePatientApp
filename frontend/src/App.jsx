@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import RegisterPatient from "./pages/RegisterPatient"
 import CreateRv from "./pages/CreateRv"
 import axios from 'axios';
-
+import Listepatient from "./pages/listepatients" 
 axios.defaults.withCredentials = true;
 
 function Logout() {
@@ -38,6 +38,7 @@ function App() {
         <Route path="/login/registerpatient/:medecinId" element={<RegisterPatient />} />
         <Route path="/login/CreateRv/:medecinId" element={<CreateRv />} />
         <Route path="/login/home_medecin/:medecinId" element={<HomeMedecin />} />
+        <Route path="/login/ListePatient/:medecinId" element={<Listepatient />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />}></Route>

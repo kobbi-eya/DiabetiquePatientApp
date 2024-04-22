@@ -349,7 +349,7 @@ def get_patient_info(request, patient_id):
         
 
 
-"""@require_http_methods(["GET"])
+@require_http_methods(["GET"])
 def get_patient_par_medecin(request, idmedId):
     if request.method == 'GET':
         try:
@@ -382,7 +382,7 @@ def get_patient_par_medecin(request, idmedId):
         except Exception as e:
             return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
     else:
-        return JsonResponse({"error": "Méthode non autorisée"}, status=405)"""
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)
 
 """@require_http_methods(["GET"])
 def get_patient_par_medecin(request, idmed_id):
