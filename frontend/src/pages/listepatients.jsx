@@ -5,7 +5,7 @@ import '../styles/Patient.css';
 import patientImage from "./patients.png";
 import consultImage from "./consult1.png";
 import { useNavigate } from "react-router-dom";
-import deleteIcon from "./deleteicon.png"
+//import deleteIcon from "./deleteicon.png"
 function Listepatient() {
   const [patientsData, setPatientsData] = useState([]);
   const [showPatients, setShowPatients] = useState(false);
@@ -94,7 +94,7 @@ function Listepatient() {
                       <td>{patient.prenom}</td>
                       <td>{patient.date_de_naissance}</td>
                       <td>
-                        <button onClick={() => handleGetPatientInfo(patient.id)}>Information</button>
+                        <button onClick={() => navigate(`/ListePatient/Info/${patient.id}`)}>Information</button>
                         <button onClick={() => handleDeletePatient(patient.id)}>Supprimer</button>
 
                       </td>

@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import RegisterPatient from "./pages/RegisterPatient"
 import CreateRv from "./pages/CreateRv"
+import CarnetMedical  from "./pages/carnetmedicale"
 import axios from 'axios';
 import Listepatient from "./pages/listepatients" 
 axios.defaults.withCredentials = true;
@@ -39,6 +40,7 @@ function App() {
         <Route path="/login/CreateRv/:medecinId" element={<CreateRv />} />
         <Route path="/login/home_medecin/:medecinId" element={<HomeMedecin />} />
         <Route path="/login/ListePatient/:medecinId" element={<Listepatient />} />
+        <Route path="/ListePatient/Info/:patientId" element={<CarnetMedical />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />}></Route>

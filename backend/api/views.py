@@ -314,7 +314,9 @@ from .models import patient
 from django.http import JsonResponse
 from .models import patient
 
-@require_http_methods(["GET", "OPTIONS"])
+from django.http import JsonResponse
+
+@require_http_methods(["GET"])
 def get_patient_info(request, patient_id):
     if request.method == 'GET': 
         try:
@@ -338,7 +340,10 @@ def get_patient_info(request, patient_id):
             }
             
             # Retournez les données du patient sous forme de réponse JSON
-            return JsonResponse(patient_data)
+            response = JsonResponse(patient_data)
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+            return response
             
         except patient.DoesNotExist:
             # Si le patient n'existe pas, retournez une erreur 404
@@ -346,7 +351,7 @@ def get_patient_info(request, patient_id):
         except Exception as e:
             # Gérer les autres erreurs et retourner une réponse d'erreur
             return JsonResponse({'error': str(e)}, status=500)
-        
+
 
 
 @require_http_methods(["GET"])
@@ -426,5 +431,4 @@ def get_patient_par_medecin(request, idmed_id):
             return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
     
     else:
-        print("Invalid method")
-        return JsonResponse({"error": "Méthode non autorisée"}, status=405)"""
+        print("Invalid method")"""

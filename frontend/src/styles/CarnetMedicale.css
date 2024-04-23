@@ -1,0 +1,119 @@
+/* Style de base pour le composant TabWidget */
+.container {
+    background-color: #ffffff;
+    padding: 0px;
+}
+
+nav {
+    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3); 
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0; /* Modifier pour éviter les marges indésirables */
+}
+
+nav li {
+    margin: 0px 20px; /* Réduire la marge pour un aspect plus compact */
+    padding: 5px;
+    cursor: pointer;
+}
+
+.carnet-medical {
+    font-size: 19px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    color: #47194E;
+}
+
+.tab-widget {
+    margin-left: -20px;
+    margin-top: 60px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: flex-start; /* Aligner les boutons à gauche */
+    background-color: #ffffff;
+    padding: 1px;
+}
+
+.tab {
+    font-size: 17px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px 5px 0 0;
+    background-color: #b649cbe3;
+    margin-right: 5px;
+    color: #ffffff; /* Ajouter une couleur de texte */
+    border-color: #6ba7d7;
+}
+
+.tab.active {
+    background-color: #289dc3;
+    border-bottom: 3px solid #9679d1;
+    border-color: #d6affe;
+}
+
+.tab-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #c2aaca69;
+    border: 1px solid #d9d4d4;
+    border-radius: 0 0 5px 5px;
+}
+.window{
+    font-size: 18px;
+}
+
+
+.carnet  {
+    width: 300px;
+    height: auto;
+    position: absolute;
+    top: 70px; /* Peut être ajusté si nécessaire */
+    right: 27px; /* Positionne l'image sur le côté droit */
+}
+.infopers  {
+    width: 200px;
+    height: auto;
+   margin-bottom: -90px;
+   transform: translateX(-10%);
+   
+    right: 60px; /* Positionne l'image sur le côté droit */
+}
+.consult1 {
+    width: 300px;
+    height: auto;
+   
+}
+
+.infopers1 {
+    width: 200px;
+    height: auto;
+    margin-left: 50px;
+}
+.right {
+    width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: left; /* Aligner à gauche */
+    margin-right: 10px; /* Espacement entre la partie gauche et la partie droite */
+  }  
+  .left {
+    width: calc(50% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: right ; /* Aligner à droite */
+    margin-left:10px; /* Espacement entre la partie gauche et la partie droite */
+    position: relative;  
+}

@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/medecin/rendez-vous/<int:idmed_id>/', rendez_vous_medecin, name='rendez_vous_medecin'),
     path('api/patients/<int:patient_id>/', get_patient_info, name='get_patient_info'),
     path('api/medecin/ListesPatients/<int:idmedId>/', get_patient_par_medecin, name='get_patient_par_medecin'),
+    #path('/api/patients/consultations/<int:patient_id>',get_consultations_patient,name='get_consultations_patient'),
     path('', include('api.urls')),
 ]
 # backend/urls.py
