@@ -4,16 +4,21 @@ import api from '../api';
 import '../styles/Patient.css';
 import patientImage from "./patients.png";
 import consultImage from "./consult1.png";
+import supprimerImage from "./supprimer.png";
 import { useNavigate } from "react-router-dom";
-import deleteIcon from "./deleteicon.png"
+import deleteIcon from "./deleteicon.png";
+
 function Listepatient() {
   const [patientsData, setPatientsData] = useState([]);
   const [showPatients, setShowPatients] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const { medecinId } = useParams();
-  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const [patientToDelete, setPatientToDelete] = useState(null);
+  const [sortBy, setSortBy] = useState("nom");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortAge, setSortAge] = useState("asc");
+  const [patientIdToDelete, setPatientIdToDelete] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleShowPatients = () => {
@@ -42,15 +47,52 @@ function Listepatient() {
     // Cacher l'icône de confirmation après la suppression
     setShowConfirmation(false);
   };
+  
 
- /* const confirmDeletion = (patientId) => {
+  const confirmDeletion = (patientId) => {
     // Afficher la page de confirmation et définir le patient à supprimer
-    setPatientToDelete(patientId);
-  };*/
+    setPatientIdToDelete(patientId);
+    setShowConfirmation(true);
+  };
 
   useEffect(() => {
     handleShowPatients();
+    handleDeletePatient ();
   }, []);
+
+  const filteredPatientsData = patientsData.filter((patient) => {
+    return (
+      patient.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.prenom.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  const sortedPatientsData = filteredPatientsData.sort((a, b) => {
+    if (sortBy === "nom" || sortBy === "prenom") {
+      const nameA = a[sortBy].toUpperCase();
+      const nameB = b[sortBy].toUpperCase();
+      if (nameA < nameB) {
+        return sortOrder === "asc" ? -1 : 1;
+      }
+      if (nameA > nameB) {
+        return sortOrder === "asc" ? 1 : -1;
+      }
+      return 0;
+    }
+    if (sortBy === "age") {
+      return sortOrder === "asc" ? a.age - b.age : b.age - a.age;
+    }
+    return 0;
+  });
+
+  const toggleSortOrder = (sortByField) => {
+    if (sortBy === sortByField) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortOrder("asc");
+    }
+    setSortBy(sortByField);
+  };
 
   return (
     <div className="container">
@@ -73,30 +115,40 @@ function Listepatient() {
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                <button className="clean-button">Nettoyer</button>
-                <button className="ajout-button" onClick={() =>navigate(`/login/registerpatient/${medecinId}`)}>Ajouter un patient</button>
-
-                {/* Ajouter ici le bouton pour ajouter un patient */}
+                <button className="clean-button" onClick={() => setSearchTerm("")}>
+                  Nettoyer
+                </button>
+                <button className="ajout-button" onClick={() => navigate(`/login/registerpatient/${medecinId}`)}>
+                  Ajouter un patient
+                </button>
               </div>
               <table>
                 <thead>
                   <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Date de Naissance</th>
+                    <th onClick={() => toggleSortOrder("nom")}>
+                      Nom
+                      {sortBy === "nom" && <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>}
+                    </th>
+                    <th onClick={() => toggleSortOrder("prenom")}>
+                      Prénom
+                      {sortBy === "prenom" && <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>}
+                    </th>
+                    <th onClick={() => toggleSortOrder("age")}>
+                      Âge
+                      {sortBy === "age" && <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>}
+                    </th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {patientsData.map((patient) => (
+                  {sortedPatientsData.map((patient) => (
                     <tr key={patient.id}>
                       <td>{patient.nom}</td>
                       <td>{patient.prenom}</td>
                       <td>{patient.date_de_naissance}</td>
                       <td>
                         <button onClick={() => handleGetPatientInfo(patient.id)}>Information</button>
-                        <button onClick={() => handleDeletePatient(patient.id)}>Supprimer</button>
-
+                        <button onClick={() => confirmDeletion(patient.id)}>Supprimer</button>
                       </td>
                     </tr>
                   ))}
@@ -104,6 +156,15 @@ function Listepatient() {
               </table>
             </div>
           </div>
+        </div>
+      )}
+      {showConfirmation && (
+        <div className="confirmation-modal">
+          <img src={supprimerImage} alt="supprimer" className="supprimer" />
+          <p>Êtes-vous sûr de vouloir supprimer ce patient ?</p>
+          <button onClick={() =>  setPatientIdToDelete(null)}>Oui</button>
+
+          <button onClick={() => setShowConfirmation(false)}>Non</button>
         </div>
       )}
       {selectedPatient && (

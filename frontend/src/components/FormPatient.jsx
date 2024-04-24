@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import registpatientImage from "./editpatient.png";
 import "../styles/FormPatient.css";
 import { useNavigate } from 'react-router-dom';
 
@@ -79,159 +80,161 @@ const FormPatient = ({medecinId}) => {
   };
   
   return (
-    <div className="container">
+    <div className="container_registpatient">
         
-      <h1 className="title_patients">Informations du patient</h1>
-      <div className="sous_container">
-        <form onSubmit={handleSubmit}>
-          <div className="format">
-            <div className="left">
-              
-              <label>
-                Nom:
-              <input
-                type="text"
-                id="nom"
-                name="nom"
-                value={patient.nom}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Prénom:
-              <input
-                type="text"
-                id="prenom"
-                name="prenom"
-                value={patient.prenom}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Sexe:
-              <select
-                id="sexe"
-                name="sexe"
-                value={patient.sexe}
-                onChange={handlePatientInputChange}
-              >
-                <option value="HOMME">HOMME</option>
-                <option value="FEMME">FEMME</option>
-              </select>
-              </label>
-              <label>Date de naissance:
-              <DatePicker
-                id="date_de_naissance"
-                selected={patient.date_de_naissance}
-                onChange={handleDateChange}
-                dateFormat="yyyy-MM-dd"
-              />
-              </label>
-              <label>Mobile:
-              <input
-                type="tel"
-                id="mobile"
-                name="mobile"
-                value={patient.mobile}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Email:
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={patient.email}
-                onChange={handlePatientInputChange}
+    <h1 className="title_patients_registpatient">Informations du patient</h1>
+    <img src={registpatientImage} alt="registpatient" className="editpatient_registpatient" />
+
+    <div className="sous_container_registpatient">
+      <form onSubmit={handleSubmit}>
+        <div className="format_registpatient">
+          <div className="left_registpatient">
+            
+            <label className="label_registpatient">
+              Nom:
+            <input className="input_registpatient"
+              type="text"
+              id="nom"
+              name="nom"
+              value={patient.nom}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Prénom:
+            <input className="input_registpatient"
+              type="text"
+              id="prenom"
+              name="prenom"
+              value={patient.prenom}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Sexe:
+            <select className="select_registpatient"
+              id="sexe"
+              name="sexe"
+              value={patient.sexe}
+              onChange={handlePatientInputChange}
+            >
+              <option className="option_registpatient"  value="HOMME">HOMME</option>
+              <option className="option_registpatient" value="FEMME">FEMME</option>
+            </select>
+            </label>
+            <label className="label_registpatient">Date de naissance:
+            <DatePicker className="datepicker_registpatient"
+              id="date_de_naissance"
+              selected={patient.date_de_naissance}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+            />
+            </label>
+            <label className="label_registpatient"> Mobile:
+            <input className="input_registpatient"
+              type="tel"
+              id="mobile"
+              name="mobile"
+              value={patient.mobile}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Email:
+            <input className="input_registpatient"
+              type="email"
+              id="email"
+              name="email"
+              value={patient.email}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Type diabète:
+            <input className="input_registpatient"
+              type="text"
+              id="type_diabete"
+              name="type_diabete"
+              value={patient.type_diabete}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+          </div>
+          <div className="right_registpatient">
+            
+            <label className="label_registpatient">Allergies:
+            <input className="input_registpatient"
+              type="text"
+              id="allergies"
+              name="allergies"
+              value={patient.allergies}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Taille:
+            <input  className="input_registpatient"
+              type="text"
+              id="taille"
+              name="taille"
+              value={patient.taille}
+              onChange={handlePatientInputChange}
+            />
+            </label >
+            <label className="label_registpatient">Poids:
+            <input className="input_registpatient"
+              type="text"
+              id="poids"
+              name="poids"
+              value={patient.poids}
+              onChange={handlePatientInputChange}
+            />
+            </label>
+            <label className="label_registpatient">Groupe sanguin:
+            <select className="select_registpatient"
+              id="groupe_sanguin"
+              name="groupe_sanguin"
+              value={patient.groupe_sanguin}
+              onChange={handlePatientInputChange}
+            >
+              <option className="option_registpatient" value="A+">A+</option>
+              <option className="option_registpatient" value="A-">A-</option>
+              <option className="option_registpatient" value="B+">B+</option>
+              <option className="option_registpatient" value="B-">B-</option>
+              <option className="option_registpatient" value="AB+">AB+</option>
+              <option className="option_registpatient" value="AB-">AB-</option>
+              <option className="option_registpatient" value="O+">O+</option>
+              <option className="option_registpatient" value="O-">O-</option>
+            </select>
+            </label>
+            <div>
+              <label className="label_registpatient">Mot de passe:
+              <input className="input_registpatient"
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
               />
               </label>
             </div>
-            <div className="right">
-              <label>Type diabète:
-              <input
-                type="text"
-                id="type_diabete"
-                name="type_diabete"
-                value={patient.type_diabete}
-                onChange={handlePatientInputChange}
+            <div>
+              <label className="label_registpatient" >Confirmer mot de passe:
+              <input className="input_registpatient"
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
               />
               </label>
-              <label>Allergies:
-              <input
-                type="text"
-                id="allergies"
-                name="allergies"
-                value={patient.allergies}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Taille:
-              <input
-                type="text"
-                id="taille"
-                name="taille"
-                value={patient.taille}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Poids:
-              <input
-                type="text"
-                id="poids"
-                name="poids"
-                value={patient.poids}
-                onChange={handlePatientInputChange}
-              />
-              </label>
-              <label>Groupe sanguin:
-              <select
-                id="groupe_sanguin"
-                name="groupe_sanguin"
-                value={patient.groupe_sanguin}
-                onChange={handlePatientInputChange}
-              >
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-              </select>
-              </label>
-              <div>
-                <label>Mot de passe:
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                </label>
-              </div>
-              <div>
-                <label >Confirmer mot de passe:
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                />
-                </label>
-              </div>
             </div>
           </div>
-          <button type="submit" className="confirm-button">
-            Confirmer
-          </button>
-          <button type="button" className="cancel-button">
-            Annuler
-          </button>
-        </form>
-      </div>
+        </div>
+        <button type="submit" className="confirm-button_registpatient">
+          Confirmer
+        </button>
+        <button type="button" className="cancel-button_registpatient">
+          Annuler
+        </button>
+      </form>
     </div>
-  );
+  </div>
+);
 };
-
 export default FormPatient;

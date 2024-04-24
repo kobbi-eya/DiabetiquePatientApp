@@ -48,16 +48,16 @@ function FormLogin() {
       };
 
   return (
-    <div className="container">
-      <div className='title_connection'>Se connecter à votre compte</div>
-      <div className="sous-container">
-        <div className="left">
-           <img src={logo} alt="logo" className="logo" />
-           <img src={doctor} alt="man" className="doctor" />
+    <div className="container_loginmed ">
+      <div className='title_connection_loginmed '>Se connecter à votre compte</div>
+      <div className="sous-container_loginmed ">
+        <div className="left_loginmed ">
+           <img src={logo} alt="logo" className="logo_loginmed " />
+           <img src={doctor} alt="man" className="doctor_loginmed " />
         </div>
-        <div className="right">
+        <div className="right_loginmed ">
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Nom de l'utilisateur:</label>
+            <label  htmlFor="email">Nom de l'utilisateur:</label>
             <input
               type="email"
               id="email"
@@ -66,15 +66,15 @@ function FormLogin() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <label htmlFor="password">Mot de passe:</label>
-            <input
+            <label   htmlFor="password">Mot de passe:</label>
+            <input 
               type="password"
               id="password"
               name="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            <div className="submit">
+            <div className="submit_loginmed ">
               <button type="submit" disabled={loading}>Se connecter</button> {/* Désactiver le bouton de soumission pendant le chargement */}
             </div>
           </form>

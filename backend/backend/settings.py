@@ -104,11 +104,14 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apipcd',
-        'HOST':'127.0.0.1',
+        'NAME': 'apipcd1',
+       # 'HOST':'127.0.0.1',
+        'HOST':'localhost',
         'USER':'root',
-        'PASSWORD': '$Papatirou7i67',
-        'PORT':'3306'
+        #'PASSWORD': '$Papatirou7i67',
+        'PASSWORD':'mysql2024',
+        'PORT':'3307'
+        #'PORT':'3306''
     }
 }
 

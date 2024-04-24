@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\MSI\Desktop\D-R-tut\env
+set VIRTUAL_ENV=D:\PCD_versionfinale\D-R-tut\env
 
 if not defined PROMPT set PROMPT=$P$G
 

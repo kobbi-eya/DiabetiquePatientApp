@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import registmedImage from './registmed.png';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import '../styles/RegistMed.css';
 
 const FormRegisterMed = () => {
   const [medecin, setMedecin] = useState({
@@ -61,121 +62,108 @@ const FormRegisterMed = () => {
   };
 
   return (
-    <div className="container">
-      <nav>
-        <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          Menu
-        </button>
-        <ul className={`nav-menu ${isMenuOpen ? 'open' : ''}`}>
-          <li>Accueil</li>
-          <li>Patients</li>
-          <li>Consultations</li>
-          <li>Déconnexion</li>
-        </ul>
-      </nav>
+    <div className="container_registmed">
+    <h1 className="title_medecin_registmed">Informations du médecin</h1>
+    <img src={registmedImage} alt="registmed" className="registmed_registmed" />
 
-      <h1 className="title_medecin">Informations du médecin</h1>
-      <img src={registmedImage} alt="registmed" className="registmed" />
-
-      <div className="sous_container">
-        <form onSubmit={handleSubmit}>
-          <div className="format">
-            <div className="left">
-              <label>
-                Nom:
-                <input
-                  type="text"
-                  id="nom"
-                  name="nom"
-                  value={medecin.nom}
-                  onChange={handleMedecinInputChange}
-                />
-              </label>
-              <label>
-                Prénom:
-                <input
-                  type="text"
-                  id="prenom"
-                  name="prenom"
-                  value={medecin.prenom}
-                  onChange={handleMedecinInputChange}
-                />
-              </label>
-              <label>
-                Date de naissance:
-                <DatePicker
-                  selected={medecin.date_de_naissance}
-                  onChange={handleDateChange}
-                  dateFormat="yyyy-MM-dd" // Format de la date
-                  id="date_de_naissance"
-                />
-              </label>
-              <label>
-                Mobile:
-                <input
-                  type="tel"
-                  id="mobile"
-                  name="mobile"
-                  value={medecin.mobile}
-                  onChange={handleMedecinInputChange}
-                />
-              </label>
-            </div>
-            <div className="right">
-              <label>
-                Spécialiste:
-                <input
-                  type="text"
-                  id="specialite"
-                  name="specialite"
-                  value={medecin.specialite}
-                  onChange={handleMedecinInputChange}
-                />
-              </label>
-              <label>
-                Email:
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={medecin.email}
-                  onChange={handleMedecinInputChange}
-                />
-              </label>
-              <div>
-                <label htmlFor="password">
-                  Mot de passe:
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                  />
-                </label>
-              </div>
-              <div>
-                <label htmlFor="confirmPassword">
-                  Confirmer mot de passe:
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(event) => setConfirmPassword(event.target.value)}
-                  />
-                </label>
-              </div>
-              <button type="submit" className="confirm-button">
-                Confirmer
-              </button>
-              <button className="cancel-button">Annuler</button>
-            </div>
+    <div className="sous_container_registmed">
+      <form onSubmit={handleSubmit}>
+        <div className="format_registmed">
+          <div className="left_registmed">
+            <label className='label_registmed'>
+              Nom:
+              <input className='input_registmed' 
+                type="text"
+                id="nom"
+                name="nom"
+                value={medecin.nom}
+                onChange={handleMedecinInputChange}
+              />
+            </label>
+            <label className='label_registmed'>
+              Prénom:
+              <input className='input_registmed' 
+                type="text"
+                id="prenom"
+                name="prenom"
+                value={medecin.prenom}
+                onChange={handleMedecinInputChange}
+              />
+            </label>
+            <label className='label_registmed'>
+              Date de naissance:
+              <DatePicker className='datepicker_registpatient'
+                selected={medecin.date_de_naissance}
+                onChange={handleDateChange}
+                dateFormat="yyyy-MM-dd" // Format de la date
+                id="date_de_naissance"
+              />
+            </label>
+            <label className='label_registmed'>
+              Mobile:
+              <input className='input_registmed' 
+                type="tel"
+                id="mobile"
+                name="mobile"
+                value={medecin.mobile}
+                onChange={handleMedecinInputChange}
+              />
+            </label>
           </div>
-        </form>
-      </div>
+          <div className="right_registmed">
+            <label className='label_registmed'>
+              Spécialiste:
+              <input className='input_registmed' 
+                type="text"
+                id="specialite"
+                name="specialite"
+                value={medecin.specialite}
+                onChange={handleMedecinInputChange}
+              />
+            </label>
+            <label className='label_registmed'>
+              Email:
+              <input className='input_registmed' 
+                type="email"
+                id="email"
+                name="email"
+                value={medecin.email}
+                onChange={handleMedecinInputChange}
+              />
+            </label>
+            <div>
+              <label className='label_registmed' htmlFor="password">
+                Mot de passe:
+                <input className='input_registmed'
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label className='label_registmed' htmlFor="confirmPassword">
+                Confirmer mot de passe:
+                <input className='input_registmed'
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                />
+              </label>
+            </div>
+            <button type="submit" className="confirm-button_registmed">
+              Confirmer
+            </button>
+            <button className="cancel-button_registmed">Annuler</button>
+          </div>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
-
 export default FormRegisterMed;
