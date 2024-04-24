@@ -27,7 +27,7 @@ function Listepatient() {
       });
   };
 
-  const handleGetPatientInfo = (patientId) => {
+  /*const handleGetPatientInfo = (patientId) => {
     api.get(`http://localhost:8000/api/patients/${patientId}`)
       .then((res) => {
         setSelectedPatient(res.data);
@@ -35,7 +35,7 @@ function Listepatient() {
       .catch((error) => {
         console.error('Error fetching patient information:', error);
       });
-  };
+  };*/
 
   const handleDeletePatient = (patientId) => {
     setPatientsData(patientsData.filter(patient => patient.id !== patientId));
