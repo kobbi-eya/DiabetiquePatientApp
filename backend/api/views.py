@@ -336,6 +336,7 @@ def get_patient_info(request, patient_id):
                 'allergies': patient_obj.allergies,
                 'groupe_sanguin': patient_obj.groupe_sanguin,
                 'email': patient_obj.email,
+                'type_diabete':patient_obj.type_diabete,
                 # Ajoutez d'autres champs du modèle patient selon vos besoins
             }
             
@@ -354,15 +355,44 @@ def get_patient_info(request, patient_id):
 
 
 
+
+
+
+@csrf_exempt
+@require_http_methods(['PUT', 'POST'])
+def update_patient(request, patient_id):
+    try:
+        # Récupérer les données JSON à partir du corps de la requête
+        data = json.loads(request.body.decode('utf-8'))
+
+        # Récupérer le patient à partir de l'ID
+        patients = patient.objects.get(idusers=patient_id)
+
+        # Mettre à jour les informations du patient
+        if 'taille' in data:
+            patients.taille = data['taille']
+        if 'allergies' in data:
+            patients.allergies = data['allergies']
+        if 'poids' in data:
+            patients.poids = data['poids']
+
+        # Sauvegarder les modifications dans la base de données
+        patients.save()
+
+        # Retourner une réponse JSON indiquant que la mise à jour a réussi
+        return JsonResponse({"message": "Mise à jour réussie", "success": True})
+    except Exception as e:
+        # En cas d'erreur, retourner une réponse JSON avec un message d'erreur
+        return JsonResponse({"error": str(e)}, status=500)
+
+    
 @require_http_methods(["GET"])
 def get_patient_par_medecin(request, idmedId):
     if request.method == 'GET':
         try:
-        
             
             # Récupérez tous les patients associés à ce médecin
             patients = patient.objects.filter(idmed_id=idmedId)
-
             
             # Formatez les données des patients pour le JSON
             patients_data = [{'id': pati.idusers,
@@ -432,3 +462,41 @@ def get_patient_par_medecin(request, idmed_id):
     
     else:
         print("Invalid method")"""
+
+from django.http import JsonResponse
+from .models import patient, consultations
+from django.db.models import Q
+
+@require_http_methods(['GET'])
+def get_consultations_patient(request, patient_id):
+    if request.method == 'GET':
+        try:
+            # Récupérer le patient spécifique
+            patient_obj = patient.objects.get(idusers=patient_id)
+
+            # Récupérer les consultations du patient spécifié avec ordonnance non vide
+            patient_consultations = consultations.objects.filter(
+                Q(idpat_id=patient_obj) & ~Q(ordonnance=''))
+
+            # Formater les données des consultations pour le JSON
+            consultations_data = [{'id': consult.idconsultations,
+                                   'date_consultation': consult.date_consultation,
+                                   'heure_consultation': consult.heure_consultation,
+                                   'ordonnance': consult.ordonnance,
+                                   'description': consult.description,
+                                   'bilan': consult.bilan,
+                                   'medecin': f"{consult.idmede.nom} {consult.idmede.prenom}"
+                                   # Ajouter d'autres champs du modèle consultation selon vos besoins
+                                   } for consult in patient_consultations]
+
+            # Retourner les données des consultations sous forme de réponse JSON avec les en-têtes CORS appropriés
+            response = JsonResponse({"consultations": consultations_data, "success": True})
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+            return response
+        except patient.DoesNotExist:
+            return JsonResponse({"error": "Patient non trouvé"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
+    else:
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)
