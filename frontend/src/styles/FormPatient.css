@@ -1,24 +1,8 @@
-
-
-#poids-label::after {
-  content: '';
-  display: block;
-  width: 95%;
-  height: 0.75px;
-  background-color: #3385b591;
-  margin-top: 0px;
-  margin-left: 5px;
-}
-
-#poids-label:hover::after {
-  background-color: #fa20eff0;
-  transition: background-color 0.3s ease;
-}
-
-.container {
+.container_registpatient {
   background-color: #ffffff;
   padding: 0px;
 }
+
 .nav-menu {
   display: flex;
   list-style: none;
@@ -26,10 +10,30 @@
   padding: 0;
 }
 
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  justify-content: flex-end; /* Alignement des éléments à droite */
+}
+
+nav li {
+  margin-right: 60px;
+  font-size: 18.5px;
+  padding: 50px;
+  cursor: pointer;
+  color: white; /* Couleur du texte */
+  text-decoration: none; /* Suppression du soulignement */
+}
+
+nav li:hover {
+  text-decoration: none; /* Suppression du soulignement au survol */
+}
+
 .nav-menu li {
   padding: 5px;
   cursor: pointer;
-  
 }
 
 .menu-toggle {
@@ -53,6 +57,7 @@
   .menu-toggle:focus {
     outline: none;
   }
+
   .nav-menu.open {
     display: block;
     position: absolute;
@@ -60,40 +65,41 @@
     left: 0;
     background: linear-gradient(to bottom, rgba(196, 2, 212, 0.7), rgba(31, 223, 217, 0.7));
     width: 30%;
-    
   }
-  
+
   .nav-menu.open li {
     padding: 10px;
     text-align: left;
     margin-left: 10px;
   }
+
   nav {
     background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-    color: #ffffff;
+    color: #ffffff !important;
     text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .title_patients {
+
+  .title_patients_registpatient {
     font-size: 32px;
     padding: 1px;
     margin-top: 20px;
     margin-left: 30px;
     color: #47194E;
   }
-  
-  .editpatient {
+
+  .editpatient_registpatient {
     width: 230px;
     height: 470px;
     position: absolute;
     top: 90px; /* Peut être ajusté si nécessaire */
     right: 0px;
   }
-  
-  .sous_container {
+
+  .sous_container_registpatient {
     background-color: #e1e1e17a;
     padding: 0px;
     margin-right: 170px;
@@ -101,32 +107,30 @@
     border-radius: 15px;
     margin-top: 40px;
   }
-  
-  .format {
+
+  .format_registpatient {
     display: flex;
   }
-  
-  
-  .left {
+
+  .left_registpatient {
     width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
     float: left; /* Aligner à gauche */
     margin-right: 5px; /* Espacement entre la partie gauche et la partie droite */
   }
-  
-  .right {
+
+  .right_registpatient {
     width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
     float: right; /* Aligner à droite */
     margin-left: 5px; /* Espacement entre la partie gauche et la partie droite */
   }
-  
+
   form {
     margin-top: 10px;
     margin-left: 5px;
     margin-right: 0px;
   }
-  
-  
-  label {
+
+  .label_registpatient {
     margin-left: 7px;
     display: block;
     margin-bottom: 18px;
@@ -134,8 +138,8 @@
     color: #2c0c5a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
-  label::after {
+
+  .label_registpatient::after {
     content: '';
     display: block;
     width: 95%;
@@ -144,17 +148,15 @@
     margin-top: 0px;
     margin-left: 5px;
   }
-  
-  label:hover::after {
+
+  .label_registpatient:hover::after {
     background-color: #fa20eff0;
     transition: background-color 0.3s ease;
   }
-  
-  input[type="text"],
-  input[type="tel"],
-  input[type="email"],
-  input[type="password"],
-  select,
+
+  .input_registpatient,
+  .select_registpatient,
+  .datepicker_registpatient ,
   textarea {
     width: calc(100% - 14px);
     padding: 7px;
@@ -162,115 +164,122 @@
     border-radius: 8px;
     transition: border-color 0.3s ease;
   }
-  
-  input[type="text"],
-  input[type="tel"],
-  input[type="password"],
-  input[type="email"],:focus,
-  select,:focus,
-  textarea,:focus {
+
+  .input_registpatient:focus,
+  .select_registpatient:focus,
+  .datepicker_registpatient:focus,
+  textarea:focus {
     outline: none;
     border-color: #43aedc;
   }
-  
+
   .react-datepicker-wrapper {
     width: 100%;
     
   }
-  
+
   .react-datepicker-popper {
     margin-left: 30px;
   }
+
   .notes-textarea {
     width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
     height: 50px; /* Réglez la hauteur selon vos préférences */
     resize: vertical; /* Autoriser le redimensionnement vertical */
     margin-bottom: 0px; /* Espacement en bas */
   }
-  
-  
-  .cancel-button {
+
+  .option_registpatient {
+    font-size: 16px;
+    color: #802273;
+  }
+
+  .cancel-button_registpatient {
     font-size: 14px;
     margin-top: 10px;
-      position: absolute;
-      right: 170px;
-      background-color: #C402D4; /* Couleur de fond */
-      color: white; /* Couleur du texte */
-      padding: 10px 50px; /* Espacement interne */
-      border: none; /* Pas de bordure */
-      border-radius: 5px; /* Coins arrondis */
-      cursor: pointer; /* Curseur pointeur */
-      transition: background-color 0.3s; /* Animation de transition */
-    }
-    
-    .cancel-button:hover {
-      font-size: 15px;
+    position: absolute;
+    right: 170px;
+    background-color: #C402D4; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
 
-      background-color: #e4242a; /* Changement de couleur au survol */
-    }
-     
-    .confirm-button {
-      margin-top: 10px;
-    
-      font-size: 14px;
-      position: absolute;
-      right: 325px;
-      background-color: #0cb2ac; /* Couleur de fond */
-      color: white; /* Couleur du texte */
-      padding: 10px 50px; /* Espacement interne */
-      border: none; /* Pas de bordure */
-      border-radius: 5px; /* Coins arrondis */
-      cursor: pointer; /* Curseur pointeur */
-      transition: background-color 0.3s; /* Animation de transition */
-    }
-    
-    .confirm-button:hover {
-      font-size: 15px;
-      background-color: #16b556; /* Changement de couleur au survol */
-    }
+  .cancel-button_registpatient:hover {
+    font-size: 15px;
+    background-color: #e4242a; /* Changement de couleur au survol */
+  }
+
+  .confirm-button_registpatient {
+    margin-top: 10px;
+    font-size: 14px;
+    position: absolute;
+    right: 325px;
+    background-color: #0cb2ac; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+
+  .confirm-button_registpatient:hover {
+    font-size: 15px;
+    background-color: #16b556; /* Changement de couleur au survol */
+  }
 }
-@media only screen and (min-width: 768px) {
- 
 
+@media only screen and (min-width: 768px) {
   nav ul {
     display: flex;
     list-style: none;
     margin: 0px;
     padding: 0px;
     justify-content: flex-end; /* Alignement des éléments à droite */
-
   }
-
+  
   nav li {
-    margin-right:60px;
+    margin-right: 60px;
     font-size: 18.5px;
     padding: 50px;
     cursor: pointer;
+    color: white; /* Couleur du texte */
+    text-decoration: none; /* Suppression du soulignement */
   }
+  
+  nav li:hover {
+    text-decoration: none; /* Suppression du soulignement au survol */
+  }
+  
+
   nav {
     background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-    color: #ffffff;
+    color: #ffffff !important;
     text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.5);
     padding: 15px;
-   
   }
-  .title_patients {
+
+  .title_patients_registpatient {
     font-size: 34px;
     padding: 10px;
     margin-top: 30px;
     margin-left: 25px;
     color: #47194E;
   }
-  
-  .editpatient {
-    width: 320px;
+
+  .editpatient_registpatient {
+    width: 310px;
     height: 570px;
     position: absolute;
     top: 100px; /* Peut être ajusté si nécessaire */
-    right: 5px;
+    right: 10px;
   }
-  
-  .sous_container {
+
+  .sous_container_registpatient {
     background-color: #e1e1e17a;
     padding: 10px;
     margin-right: 300px;
@@ -278,39 +287,38 @@
     border-radius: 15px;
     margin-top: 50px;
   }
-  
-  .format {
+
+  .format_registpatient {
     display: flex;
   }
-  
-  
-  .left {
+
+  .left_registpatient {
     width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
     float: left; /* Aligner à gauche */
     margin-right: 20px; /* Espacement entre la partie gauche et la partie droite */
   }
-  
-  .right {
+
+  .right_registpatient {
     width: calc(50% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
     float: right; /* Aligner à droite */
     margin-left: 20px; /* Espacement entre la partie gauche et la partie droite */
   }
-  
+
   form {
     margin-top: 5px;
     margin-left: 15px;
     margin-right: 15px;
   }
-  
-  label {
+
+  .label_registpatient{
     display: block;
     margin-bottom: 20px;
     font-size: 20px;
     color: #2c0c5a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
-  label::after {
+
+  .label_registpatient::after {
     content: '';
     display: block;
     width: 98%;
@@ -319,17 +327,16 @@
     margin-top: 0px;
     margin-left: 4px;
   }
-  
-  label:hover::after {
+
+  .label_registpatient:hover::after {
     background-color: #fa20eff0;
     transition: background-color 0.3s ease;
   }
   
-  input[type="text"],
-  input[type="tel"],
-  input[type="email"],
-  input[type="password"],
-  select,
+
+  .input_registpatient,
+  .select_registpatient,
+  .datepicker_registpatient ,
   textarea {
     width: calc(100% - 14px);
     padding: 7px;
@@ -337,75 +344,66 @@
     border-radius: 8px;
     transition: border-color 0.3s ease;
   }
-  
-  input[type="text"],
-  input[type="tel"],
- input[type="email"],
-  input[type="password"],:focus,
-  select,:focus,
-  textarea,:focus {
+
+  .input_registpatient:focus,
+  .select_registpatient:focus,
+  .datepicker_registpatient:focus,
+  textarea:focus {
     outline: none;
-    border-color: #43aedc;
+    border-color: #5290ab;
   }
-  
+
   .react-datepicker-wrapper {
     width: 100%;
   }
-  
-  .react-datepicker-popper {
+ 
+  .option_registpatient {
+    font-size: 16px;
+    color: #802273;
   }
-  .notes-textarea {
-   
+
+  .notes-textarea  {
     width: 99%; /* Définissez la largeur à 100% pour remplir la largeur du conteneur */
     height: 50px; /* Réglez la hauteur selon vos préférences */
     resize: vertical; /* Autoriser le redimensionnement vertical */
     margin-bottom: 0px; /* Espacement en bas */
   }
-  
-    .cancel-button {
-      margin-top: 10px;
-      font-size: 16px;
-      position: absolute;
-      
-      right: 300px;
-      background-color: #C402D4; /* Couleur de fond */
-      color: white; /* Couleur du texte */
-      padding: 10px 50px; /* Espacement interne */
-      border: none; /* Pas de bordure */
-      border-radius: 5px; /* Coins arrondis */
-      cursor: pointer; /* Curseur pointeur */
-      transition: background-color 0.3s; /* Animation de transition */
-    }
-    
-    .cancel-button:hover {
-      
 
-      font-size: 18px;
-      background-color: #e4242a; /* Changement de couleur au survol */
-    }
-     
-    .confirm-button {
-      margin-top: 10px;
+  .cancel-button_registpatient {
+    margin-top: 10px;
+    font-size: 16px;
+    position: absolute;
+    right: 300px;
+    background-color: #C402D4; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
 
-      font-size: 16px;
-      position: absolute;
-      right: 465px;
-      background-color: #0cb2ac; /* Couleur de fond */
-      color: white; /* Couleur du texte */
-      padding: 10px 50px; /* Espacement interne */
-      border: none; /* Pas de bordure */
-      border-radius: 5px; /* Coins arrondis */
-      cursor: pointer; /* Curseur pointeur */
-      transition: background-color 0.3s; /* Animation de transition */
-    }
-    
-    .confirm-button:hover {
+  .cancel-button_registpatient:hover {
+    font-size: 18px;
+    background-color: #e4242a; /* Changement de couleur au survol */
+  }
 
-      font-size: 18px;
+  .confirm-button_registpatient {
+    margin-top: 10px;
+    font-size: 16px;
+    position: absolute;
+    right: 465px;
+    background-color: #0cb2ac; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
 
-      background-color: #16b556; /* Changement de couleur au survol */
-    }
+  .confirm-button_registpatient:hover {
+    font-size: 18px;
+    background-color: #16b556; /* Changement de couleur au survol */
+  }
 }
-
-
-

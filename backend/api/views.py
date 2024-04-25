@@ -1,9 +1,8 @@
-# Django views.py
-
 import json
 import re
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
 from .models import consultations, patient, users  # Importez votre modèle utilisateur personnalisé
@@ -467,16 +466,16 @@ from django.http import JsonResponse
 from .models import patient, consultations
 from django.db.models import Q
 
-@require_http_methods(['GET'])
+@require_http_methods(["GET"])
 def get_consultations_patient(request, patient_id):
     if request.method == 'GET':
         try:
-            # Récupérer le patient spécifique
-            patient_obj = patient.objects.get(idusers=patient_id)
+           
 
             # Récupérer les consultations du patient spécifié avec ordonnance non vide
             patient_consultations = consultations.objects.filter(
-                Q(idpat_id=patient_obj) & ~Q(ordonnance=''))
+                Q(idpat_id=patient_id) & ~Q(ordonnance=''))
+            
 
             # Formater les données des consultations pour le JSON
             consultations_data = [{'id': consult.idconsultations,
@@ -485,18 +484,91 @@ def get_consultations_patient(request, patient_id):
                                    'ordonnance': consult.ordonnance,
                                    'description': consult.description,
                                    'bilan': consult.bilan,
-                                   'medecin': f"{consult.idmede.nom} {consult.idmede.prenom}"
+                                   #'medecin': f"{consult.idmede.nom} {consult.idmede.prenom}"
                                    # Ajouter d'autres champs du modèle consultation selon vos besoins
                                    } for consult in patient_consultations]
-
+            print(consultations_data)
             # Retourner les données des consultations sous forme de réponse JSON avec les en-têtes CORS appropriés
             response = JsonResponse({"consultations": consultations_data, "success": True})
             response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
             response["Access-Control-Allow-Methods"] = "GET, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
             return response
-        except patient.DoesNotExist:
-            return JsonResponse({"error": "Patient non trouvé"}, status=404)
         except Exception as e:
             return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
     else:
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_http_methods
+from .models import consultations  # Assurez-vous d'importer correctement le modèle
+
+@require_http_methods(["GET"])
+def get_consultation_detail(request,id_conslt):
+    if request.method == 'GET':
+        try:
+            consultation = get_object_or_404(consultations, pk=id_conslt)  # Utilisez le nom correct du modèle
+            data = {
+                'id': consultation.idconsultations,  # Assurez-vous d'utiliser les bons noms de champs
+                'date': consultation.date_consultation,  # Assurez-vous d'utiliser les bons noms de champs
+                'heure': consultation.heure_consultation,  # Assurez-vous d'utiliser les bons noms de champs
+                'ordonnance': consultation.ordonnance,
+                'bilan': consultation.bilan,
+                'patient': {
+                    'id': consultation.idpat.idusers,  # Inclure l'ID du patient
+                    'nom': consultation.idpat.nom,  # Inclure le nom du patient
+                    'prenom': consultation.idpat.prenom,  # Inclure le prénom du patient
+                    'email': consultation.idpat.email  # Inclure l'email du patient, etc.
+                    # Ajoutez d'autres champs du patient selon vos besoins
+                }
+                # Ajoutez d'autres champs selon vos besoins
+            }
+            response = JsonResponse(data)
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+            return response
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    else:
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])  # Utilisez POST pour la méthode HTTP
+def update_consultation(request, id_conslt):
+    consultation = get_object_or_404(consultations, idconsultations=id_conslt)  # Utilisez le nom correct du modèle
+    if request.method == 'POST':
+        # Récupérez les données du formulaire JSON envoyé dans le corps de la requête
+        data = json.loads(request.body)
+        # Mettez à jour les champs de la consultation avec les données fournies
+        consultation.ordonnance = data.get('ordonnance', consultation.ordonnance)
+        consultation.bilan = data.get('bilan', consultation.bilan)
+        # Ajoutez d'autres champs à mettre à jour selon vos besoins
+        
+        # Enregistrez les modifications dans la base de données
+        consultation.save()
+        return JsonResponse({'success': True})
+    else:
+        response = JsonResponse({'error': 'Méthode non autorisée'}, status=405)
+        response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+        return response
+
+
+
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+@csrf_exempt
+def import_pdf(request, consultation_id):
+    consultation = get_object_or_404(consultations, pk=consultation_id)
+    if request.method == 'POST' and request.FILES['pdf_file']:
+        pdf_file = request.FILES['pdf_file']
+        # Code pour sauvegarder le fichier PDF et le traiter si nécessaire
+        # Une fois le traitement terminé, vous pouvez rediriger l'utilisateur vers la page de consultation
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'error': 'Veuillez fournir un fichier PDF valide.'}, status=400)

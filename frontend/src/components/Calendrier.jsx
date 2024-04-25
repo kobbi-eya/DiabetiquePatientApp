@@ -1,5 +1,3 @@
-// Calendrier.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -10,7 +8,7 @@ import Agenda from "./agenda.png";
 import logo from "./logo.png";
 import Calendrierr from "./calendrier.png";
 import Calendrier_1 from './calendrier_1.png'; // Importez les événements
-
+import { useNavigate } from "react-router-dom";
 const localizer = momentLocalizer(moment);
 
 const eventStyleGetter = (event) => {
@@ -23,17 +21,16 @@ const eventStyleGetter = (event) => {
 };
 
 const Calendrier = ({ rendezVousData }) => {
+    const navigate = useNavigate();
     console.log("helle" ,rendezVousData)
     const handleAgendaClick = (event) => {
+        navigate(`/consultation/${event.id}`);
         // Vous pouvez ajouter ici la logique pour ouvrir une fenêtre modale ou rediriger vers la page des informations du rendez-vous
         console.log("Informations du rendez-vous:", event);
         // Par exemple, pour rediriger vers une page spécifique avec les informations du rendez-vous, vous pouvez utiliser le navigateur
         //window.location.href = `/rendezvous/${event.id}`; // Assurez-vous d'adapter cette URL à votre structure de route
       };
     
-      
-
-
   return (
     <div className="calendrier-container">
       <h1>Calendrier des rendez-vous</h1>

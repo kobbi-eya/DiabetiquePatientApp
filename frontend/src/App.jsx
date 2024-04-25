@@ -10,6 +10,7 @@ import CreateRv from "./pages/CreateRv"
 import CarnetMedical  from "./pages/carnetmedicale"
 import axios from 'axios';
 import Listepatient from "./pages/listepatients" 
+import Consultation from  "./components/Consultation"
 axios.defaults.withCredentials = true;
 
 function Logout() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/ListePatient/Info/:patientId" element={<CarnetMedical />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/consultation/:id" element={<Consultation/>} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>

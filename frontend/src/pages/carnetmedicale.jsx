@@ -33,7 +33,7 @@ function CarnetMedical() {
   }, [patientId]);
 
   const handleshowConsultations = () => {
-    api.get(`http://localhost:8000/api/consultations/${patientId}`)
+    api.get(`http://localhost:8000/api/consultations/${patientId}/`)
       .then((res) => {
         setConsultations(res.data.consultations);
       })
@@ -126,20 +126,19 @@ function CarnetMedical() {
 
           <div label="Consultations">
             <div className="consultations-container">
-              {consultations.map((consultation) => (
-                <div key={consultation.id} className="consultation">
-                  <p>Date de consultation: {consultation.date_consultation}</p>
-                  <p>Heure de consultation: {consultation.heure_consultation}</p>
-                  <p>Ordonnance: {consultation.ordonnance}</p>
-                  <p>Description: {consultation.description}</p>
-                  <p>Bilan: {consultation.bilan}</p>
-                  <p>Médecin: {consultation.medecin}</p>
-                  {/* Ajoutez ici d'autres informations de consultation si nécessaire */}
-                </div>
-              ))}
+            {consultations.map((consultation) => (
+          <div key={consultation.id} className="consultation">
+            <p>Date de consultation: {consultation.date_consultation}</p>
+            <p>Heure de consultation: {consultation.heure_consultation}</p>
+            <p>Ordonnance: {consultation.ordonnance}</p>
+            <p>Description: {consultation.description}</p>
+            <p>Bilan: {consultation.bilan}</p>
+            <p>Médecin: {consultation.medecin}</p>
+            {/* Ajoutez ici d'autres informations de consultation si nécessaire */}
+          </div>
+            ))}
             </div>
           </div>
-
         </TabWidget>
       </div>
     </div>

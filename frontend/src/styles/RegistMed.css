@@ -1,376 +1,360 @@
-.container {
-    background-color: #ffffff;
-    padding: 0px;
-  }
-  
-  
-  
-  
+.container_registmed {
+  background-color: #ffffff;
+  padding: 0px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.menu-toggle {
+  display: none; /* Cachez le bouton de menu par défaut */
+}
+
+@media only screen and (max-width: 768px) {
   .nav-menu {
+    display: none; /* Cachez les données de la barre de navigation sur les petits écrans */
+  }
+
+  .menu-toggle {
+    display: block; /* Affichez le bouton de menu sur les petits écrans */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff; /* Suppression du caractère inutile */
+    font-size: 1.3em;
+  }
+
+  .menu-toggle:focus {
+    outline: none;
+  }
+
+  .nav-menu.open {
+    display: block;
+    position: absolute;
+    top: 55px; /* Ajustez la position verticale du menu déroulant selon votre mise en page */
+    left: 0;
+    background: linear-gradient(to bottom, rgba(196, 2, 212, 0.7), rgba(31, 223, 217, 0.7));
+    width: 30%;
+  }
+
+  .nav-menu.open li {
+    padding: 10px;
+    text-align: left;
+    margin-left: 10px;
+  }
+
+  nav {
+    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title_medecin_registmed {
+    font-size: 32px;
+    padding: 1px;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: #47194E;
+  }
+
+  .registmed_registmed {
+    width: 250px;
+    height: 470px;
+    position: absolute;
+    top: 120px; /* Peut être ajusté si nécessaire */
+    right: -35px;
+  }
+
+  .sous_container_registmed {
+    background-color: #e1e1e17a;
+    padding: 0px;
+    margin-right: 170px;
+    margin-left: 5px;
+    border-radius: 15px;
+    margin-top: 40px;
+  }
+
+  .format_registmed {
+    display: flex;
+  }
+
+  .left_registmed {
+    width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: left; /* Aligner à gauche */
+    margin-right: 5px; /* Espacement entre la partie gauche et la partie droite */
+  }
+
+  .right_registmed {
+    width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: right; /* Aligner à droite */
+    margin-left: 5px; /* Espacement entre la partie gauche et la partie droite */
+  }
+
+  form {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 0px;
+  }
+
+  .label_registmed {
+    margin-left: 7px;
+    display: block;
+    margin-bottom: 18px;
+    font-size: 17px;
+    color: #2c0c5a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .label_registmed::after {
+    content: '';
+    display: block;
+    width: 95%;
+    height: 0.75px;
+    background-color: #3385b591;
+    margin-top: 0px;
+    margin-left: 5px;
+  }
+
+  .label_registmed:hover::after {
+    background-color: #fa20eff0;
+    transition: background-color 0.3s ease;
+  }
+
+  .input_registmed,
+  .select__registmed, /* Suppression du caractère en trop */
+  .datepicker_registpatient, /* Modification du sélecteur */
+  textarea {
+    width: calc(100% - 14px);
+    padding: 7px;
+    border: 1px solid #cccccc80;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+
+  .input_registmed:focus,
+  .select__registmed:focus, /* Suppression du caractère en trop */
+  .datepicker_registpatient:focus, /* Modification du sélecteur */
+  textarea:focus {
+    outline: none;
+    border-color: #43aedc;
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker-popper {
+    margin-left: 30px;
+  }
+
+  .cancel-button_registmed {
+    font-size: 14px;
+    position: absolute;
+    bottom: 70px;
+    right: 170px;
+    background-color: #C402D4; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+
+  .cancel-button_registmed:hover {
+    font-size: 15px;
+    background-color: #e4242a; /* Changement de couleur au survol */
+  }
+
+  .confirm-button_registmed {
+    font-size: 14px;
+    position: absolute;
+    bottom: 70px;
+    right: 325px;
+    background-color: #0cb2ac; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+
+  .confirm-button_registmed:hover {
+    font-size: 15px;
+    background-color: #16b556; /* Changement de couleur au survol */
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  nav ul {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
+    justify-content: flex-end; /* Alignement des éléments à droite */
   }
-  
-  .nav-menu li {
-    padding: 5px;
-    cursor: pointer;
-    
-  }
-  
-  .menu-toggle {
-    display: none; /* Cachez le bouton de menu par défaut */
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .nav-menu {
-      display: none; /* Cachez les données de la barre de navigation sur les petits écrans */
-    }
-  
-    .menu-toggle {
-      display: block; /* Affichez le bouton de menu sur les petits écrans */
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #ffffff;
-      font-size: 1.3em;
-    }
-  
-    .menu-toggle:focus {
-      outline: none;
-    }
-    .nav-menu.open {
-      display: block;
-      position: absolute;
-      top: 55px; /* Ajustez la position verticale du menu déroulant selon votre mise en page */
-      left: 0;
-      background: linear-gradient(to bottom, rgba(196, 2, 212, 0.7), rgba(31, 223, 217, 0.7));
-      width: 30%;
-      
-    }
-    
-    .nav-menu.open li {
-      padding: 10px;
-      text-align: left;
-      margin-left: 10px;
-    }
-    nav {
-      background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-      color: #ffffff;
-      text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .title_medecin {
-      font-size: 32px;
-      padding: 1px;
-      margin-top: 20px;
-      margin-left: 30px;
-      color: #47194E;
-    }
-    
-    .registmed {
-      width: 250px;
-      height: 470px;
-      position: absolute;
-      top: 120px; /* Peut être ajusté si nécessaire */
-      right: -35px;
-    }
-    
-    .sous_container {
-      background-color: #e1e1e17a;
-      padding: 0px;
-      margin-right: 170px;
-      margin-left: 5px;
-      border-radius: 15px;
-      margin-top: 40px;
-    }
-    
-    .format {
-      display: flex;
-    }
-    
-    
-    .left {
-      width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: left; /* Aligner à gauche */
-      margin-right: 5px; /* Espacement entre la partie gauche et la partie droite */
-    }
-    
-    .right {
-      width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: right; /* Aligner à droite */
-      margin-left: 5px; /* Espacement entre la partie gauche et la partie droite */
-    }
-    
-    form {
-      margin-top: 10px;
-      margin-left: 5px;
-      margin-right: 0px;
-    }
-    
-    label {
-      margin-left: 7px;
-      display: block;
-      margin-bottom: 18px;
-      font-size: 17px;
-      color: #2c0c5a;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    
-    label::after {
-      content: '';
-      display: block;
-      width: 95%;
-      height: 0.75px;
-      background-color: #3385b591;
-      margin-top: 0px;
-      margin-left: 5px;
-    }
-    
-    label:hover::after {
-      background-color: #fa20eff0;
-      transition: background-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input[type="tel"],
-    input[type="email"],
-    input[type="password"],
-    select,
-    textarea {
-      width: calc(100% - 14px);
-      padding: 7px;
-      border: 1px solid #cccccc80;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input[type="tel"],
-    input[type="password"],
-    input[type="email"],:focus,
-    select,:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #43aedc;
-    }
-    
-    .react-datepicker-wrapper {
-      width: 100%;
-      
-    }
-    
-    .react-datepicker-popper {
-      margin-left: 30px;
-    }
-    
-    .cancel-button {
-      font-size: 14px;
-  
-        position: absolute;
-        bottom: 70px;
-        right: 170px;
-        background-color: #C402D4; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .cancel-button:hover {
-        font-size: 15px;
-  
-        background-color: #e4242a; /* Changement de couleur au survol */
-      }
-       
-      .confirm-button {
-        font-size: 14px;
-        position: absolute;
-        bottom: 70px;
-        right: 325px;
-        background-color: #0cb2ac; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .confirm-button:hover {
-        font-size: 15px;
-        background-color: #16b556; /* Changement de couleur au survol */
-      }
-  }
-  @media only screen and (min-width: 768px) {
-   
-  
-    nav ul {
-      display: flex;
-      list-style: none;
-      margin: 0px;
-      padding: 0px;
-      justify-content: flex-end; /* Alignement des éléments à droite */
-  
-    }
-  
-    nav li {
-      margin-right:60px;
-      font-size: 18.5px;
-      padding: 50px;
-      cursor: pointer;
-    }
-    nav {
-      background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
-      color: #ffffff;
-      text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.5);
-      padding: 15px;
-     
-    }
-    .title_medecin {
-      font-size: 34px;
-      padding: 10px;
-      margin-top: 30px;
-      margin-left: 25px;
-      color: #47194E;
-    }
-    
-    .registmed {
-      width: 340px;
-      height: 510px;
-      position: absolute;
-      top: 90px; /* Peut être ajusté si nécessaire */
-      right: 10px;
-    }
-    
-    .sous_container {
-      background-color: #e1e1e17a;
-      padding: 10px;
-      margin-right: 300px;
-      margin-left: 70px;
-      border-radius: 15px;
-      margin-top: 50px;
-    }
-    
-    .format {
-      display: flex;
-    }
-    
-    
-    .left {
-      width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: left; /* Aligner à gauche */
-      margin-right: 20px; /* Espacement entre la partie gauche et la partie droite */
-    }
-    
-    .right {
-      width: calc(50% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
-      float: right; /* Aligner à droite */
-      margin-left: 20px; /* Espacement entre la partie gauche et la partie droite */
-    }
-    
-    form {
-      margin-top: 5px;
-      margin-left: 15px;
-      margin-right: 15px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 20px;
-      font-size: 20px;
-      color: #2c0c5a;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    
-    label::after {
-      content: '';
-      display: block;
-      width: 98%;
-      height: 0.75px;
-      background-color: #3385b591;
-      margin-top: 0px;
-      margin-left: 4px;
-    }
-    
-    label:hover::after {
-      background-color: #fa20eff0;
-      transition: background-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input[type="tel"],
-    input[type="email"],
-    input[type="password"],
-    select,
-    textarea {
-      width: calc(100% - 14px);
-      padding: 7px;
-      border: 1px solid #cccccc80;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-    }
-    
-    input[type="text"],
-    input[type="tel"],
-   input[type="email"],
-    input[type="password"],:focus,
-    select,:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #43aedc;
-    }
-    
-    .react-datepicker-wrapper {
-      width: 100%;
-    }
 
-    
-    .cancel-button {
-        font-size: 16px;
-        position: absolute;
-        bottom: 70px;
-        right: 300px;
-        background-color: #C402D4; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .cancel-button:hover {
-        font-size: 18px;
-        background-color: #e4242a; /* Changement de couleur au survol */
-      }
-       
-      .confirm-button {
-        font-size: 16px;
-        position: absolute;
-        bottom: 70px;
-        right: 465px;
-        background-color: #0cb2ac; /* Couleur de fond */
-        color: white; /* Couleur du texte */
-        padding: 10px 50px; /* Espacement interne */
-        border: none; /* Pas de bordure */
-        border-radius: 5px; /* Coins arrondis */
-        cursor: pointer; /* Curseur pointeur */
-        transition: background-color 0.3s; /* Animation de transition */
-      }
-      
-      .confirm-button:hover {
-        font-size: 18px;
-  
-        background-color: #16b556; /* Changement de couleur au survol */
-      }
+  nav li {
+    margin-right: 60px;
+    font-size: 18.5px;
+    padding: 50px;
+    cursor: pointer;
   }
-  
-  
-  
+
+  nav {
+    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    color: #ffffff;
+    text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+  }
+
+  .title_medecin_registmed {
+    font-size: 34px;
+    padding: 10px;
+    margin-top: 30px;
+    margin-left: 25px;
+    color: #47194E;
+  }
+
+  .registmed_registmed {
+    width: 340px;
+    height: 510px;
+    position: absolute;
+    top: 90px; /* Peut être ajusté si nécessaire */
+    right: 10px;
+  }
+
+  .sous_container_registmed {
+    background-color: #e1e1e17a;
+    padding: 10px;
+    margin-right: 300px;
+    margin-left: 70px;
+    border-radius: 15px;
+    margin-top: 50px;
+  }
+
+  .format_registmed {
+    display: flex;
+  }
+
+  .left_registmed {
+    width: calc(50% - 20px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: left; /* Aligner à gauche */
+    margin-right: 20px; /* Espacement entre la partie gauche et la partie droite */
+  }
+
+  .right_registmed {
+    width: calc(50% - 10px); /* Déduction de la marge pour maintenir le total à 100% */
+    float: right; /* Aligner à droite */
+    margin-left: 20px; /* Espacement entre la partie gauche et la partie droite */
+  }
+
+  form {
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  .label_registmed {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #2c0c5a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .label_registmed::after {
+    content: '';
+    display: block;
+    width: 98%;
+    height: 0.75px;
+    background-color: #3385b591;
+    margin-top: 0px;
+    margin-left: 4px;
+  }
+
+  .label_registmed:hover::after {
+    background-color: #fa20eff0;
+    transition: background-color 0.3s ease;
+  }
+
+  .input_registmed,
+  .select__registmed, /* Suppression du caractère en trop */
+  .datepicker_registpatient, /* Modification du sélecteur */
+  textarea {
+    width: calc(100% - 14px);
+    padding: 7px;
+    border: 1px solid #cccccc80;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+
+  .input_registmed:focus,
+  .select__registmed:focus, /* Suppression du caractère en trop */
+  .datepicker_registpatient:focus, /* Modification du sélecteur */
+  textarea:focus {
+    outline: none;
+    border-color: #43aedc;
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .cancel-button_registmed {
+    font-size: 16px;
+    position: absolute;
+    bottom: 70px;
+    right: 300px;
+    background-color: #C402D4; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+
+  .cancel-button_registmed:hover {
+    font-size: 18px;
+    background-color: #e4242a; /* Changement de couleur au survol */
+  }
+
+  .confirm-button_registmed {
+    font-size: 16px;
+    position: absolute;
+    bottom: 70px;
+    right: 465px;
+    background-color: #0cb2ac; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 50px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur */
+    transition: background-color 0.3s; /* Animation de transition */
+  }
+
+  .confirm-button_registmed:hover {
+    font-size: 18px;
+    background-color: #16b556; /* Changement de couleur au survol */
+  }
+}
+
+.nav-menu li a {
+  color: #ffffff; /* Couleur du texte */
+  text-decoration: none; /* Supprimer le soulignement */
+}
