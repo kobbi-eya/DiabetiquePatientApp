@@ -10,7 +10,7 @@ import RegisterPatient from "../pages/RegisterPatient";
 function FormLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [idmed_id, setIdmed] = useState(null);
+  const [ idmed_id, setIdmed] = useState(null);
   const [loading, setLoading] = useState(false); // Ajout de loading
   const navigate = useNavigate();
 
@@ -34,7 +34,8 @@ function FormLogin() {
               setIdmed(res.data.idmed_id);
             
             } else if (res.data.role === 'PATIENT') {
-              navigate('/home_patient');
+              navigate(`/home_patient/${res.data.id_pat}`);
+              console.log('ID du patient:', res.data.id_pat);
             }
           } else {
             // Si la structure de la réponse est différente, afficher une erreur

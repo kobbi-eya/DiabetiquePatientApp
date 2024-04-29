@@ -4,13 +4,16 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Calendrier from "../components/Calendrier";
 import api from "../api";
+
 function HomeMedecin() {
   const { state } = useLocation();
   const idmedId = state ? state.idmed_id : null;
   const navigate = useNavigate();
   const [rendezVousData, setRendezVousData] = useState([]);
   useEffect(() => {
-    getRendezVous();
+    if (idmedId) {
+      getRendezVous();
+    }
   }, [idmedId]);
 
   const getRendezVous = () => {
@@ -53,6 +56,14 @@ function HomeMedecin() {
 
   return (
     <div className="container">
+      <nav>
+        <ul>
+          <li>Accueil</li>
+          <li>Patients</li>
+          <li>Consultations</li>
+          <li>Déconnexion</li>
+        </ul>
+      </nav>
       <h1 className="title_medecin">Bienvenue sur votre tableau de bord</h1>
       <div className="sous_container">
         <div className="right">

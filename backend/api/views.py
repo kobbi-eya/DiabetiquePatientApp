@@ -39,13 +39,14 @@ def user_login(request):
                 user = authenticate(request, username=email, password=password)
                 if user is not None:
                     id_medecin = user.idusers
+                    id_patient= user.idusers
                     print("User role:", user.role)
                     login(request, user)
                     print("User authenticated:", user.email)  # Message de débogage : Afficher le nom d'utilisateur authentifié
                     if user.role == 'MEDECIN':
-                        return JsonResponse({'redirect': '/home_medecin', 'role':'MEDECIN','idmed_id': id_medecin})
+                        return JsonResponse({'redirect': '/login/home_medecin/', 'role':'MEDECIN','idmed_id': id_medecin})
                     elif user.role == 'PATIENT':
-                        return JsonResponse({'redirect': '/home_patient', 'role':'PATIENT'})
+                        return JsonResponse({'redirect': '/home_patient', 'role':'PATIENT','id_pat':id_patient})
                 else:
                     print("Authentication failed for email:", email)  # Message de débogage : Indiquer que l'authentification a échoué
                     return HttpResponseForbidden("Invalid credentials")
@@ -130,26 +131,25 @@ def register_medecin(request):
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
         server.login(sender_email, 'votre_mot_de_passe')  # Modifier avec votre mot de passe
         server.send_message(message)"""      
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+@csrf_exempt
 
 
 @csrf_exempt
-def register_patient_by_medecin(request):
-    #id_medecin = request.session.get('id_medecin')
+def register_patient_by_medecin(request, idmedId):
     if request.method == 'POST':
         try:
-            
-            
-            print("hello")
-            # Assurez-vous que l'utilisateur est un médecin
-            #if request.user.role != 'MEDECIN':
-              # return JsonResponse({"error": "Méthode non autorisée"}, status=405)
+            medecin_obj = medecin.objects.get(idusers=idmedId)
             data = json.loads(request.body.decode('utf-8'))
             
-            # Extraire les données du patient du JSON
-            idmed_id = data.get('idmed_id')
             nom = data.get('nom')
             prenom = data.get('prenom')
-            sexe =data.get('sexe')
+            sexe = data.get('sexe')
             poids = data.get('poids')
             taille = data.get('taille')
             mobile = data.get('mobile')
@@ -160,21 +160,20 @@ def register_patient_by_medecin(request):
             password = data.get('password')
             type_diabete = data.get('type_diabete')
             confirm_password = data.get('confirm_password')
-            print("Received data:", data)
-            # Vérifier que toutes les données requises sont fournies
-            if not all([nom, prenom, poids, taille, mobile, allergies,sexe, groupe_sanguin, date_de_naissance, email, password]):
+            
+            if not all([nom, prenom, poids, taille, mobile, allergies, sexe, groupe_sanguin, date_de_naissance, email, password]):
                 return JsonResponse({"error": "Veuillez fournir tous les champs requis."}, status=400)
 
-            # Vérifier si l'email existe déjà dans la base de données
             if patient.objects.filter(email=email).exists():
-                return JsonResponse({"error": "Cette adresse e-mail est déjà utilisée."}, status=400)
+                return JsonResponse({"error": "Cette adresse e-mail est déjà utilisée par un autre patient."}, status=400)
             
             if password != confirm_password:
                 return JsonResponse({"error": "Les mots de passe ne correspondent pas."}, status=400)
-           
 
-            # Créer un nouvel utilisateur patient
-            new_patient = patient.objects.create(
+            # Créer un nouvel utilisateur patient en utilisant create_user de CustomUserManager
+            new_patient = patient.objects.create_user(
+                email=email,
+                password=password,
                 nom=nom,
                 prenom=prenom,
                 poids=poids,
@@ -183,31 +182,37 @@ def register_patient_by_medecin(request):
                 allergies=allergies,
                 groupe_sanguin=groupe_sanguin,
                 date_de_naissance=date_de_naissance,
-                email=email,
-                #password=make_password(password),
                 role='PATIENT',
-                type_diabete=type_diabete ,
-                sexe =sexe ,
-                idmed_id=idmed_id
-                
+                type_diabete=type_diabete,
+                sexe=sexe,
+                idmed_id=idmedId
             )
-            new_patient.set_password(password)
-            new_patient .save()
-            # Envoi de l'e-mail contenant le mot de passe au patient
-            #send_password_email(new_patient.email,new_patient.password)
+
+            # Vous n'avez pas besoin d'appeler set_password explicitement car il est déjà appelé dans create_user
+
             return JsonResponse({'redirect': '/home_medecin', "success": True})
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 
+
+def send_password_email(email, password, from_email):
+    subject = 'Votre mot de passe pour accéder au système'
+    html_message = render_to_string('password_email.html', {'password': password})
+    plain_message = strip_tags(html_message)
+    to = email
+    send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+
+
 from datetime import datetime, timedelta           
 @csrf_exempt
-def create_rendez_vous(request):
+def create_rendez_vous(request,idmedId):
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
             email = data.get('email')
-            idmede = data.get('idmed')
+            idmede = idmedId
             date_consultation = data.get('dateConsultation')
             heure_consultation = data.get('heureConsultation')
             notes = data.get('notes')
@@ -258,12 +263,9 @@ def create_rendez_vous(request):
             current_rendez_vous_datetime = datetime.combine(date_consultation, heure_consultation)
             for rendez_vous in existing_rendez_vous_same_day:
                rendez_vous_datetime = datetime.combine(rendez_vous.date_consultation, rendez_vous.heure_consultation)
-               interval = current_rendez_vous_datetime - rendez_vous_datetime
-               if interval.total_seconds() < 0 and abs(interval.total_seconds()) < 20 * 60:
-                  return JsonResponse({"error": "Il doit y avoir un intervalle de 20 minutes minimum entre les rendez-vous sur le même jour."}, status=400)
-
-
-
+               interval = abs(current_rendez_vous_datetime - rendez_vous_datetime)
+               if interval.total_seconds() < 20 * 60:
+                return JsonResponse({"error": "Il doit y avoir un intervalle de 20 minutes minimum entre les rendez-vous sur le même jour."}, status=400)
 
             rendez_vous = consultations.objects.create(
                 idpat_id=idpat,
@@ -288,10 +290,10 @@ def rendez_vous_medecin(request, idmed_id):
     if request.method == 'GET':
         try:
             # Récupérer les rendez-vous (consultations) pour le médecin spécifié
-            rendez_vous = consultations.objects.filter(idmede_id=idmed_id, bilan='', ordonnance='')
+            rendez_vous = consultations.objects.filter(idmede=idmed_id, bilan='', ordonnance='')
 
             # Serializer les rendez-vous si nécessaire
-            rendez_vous_data = [{'id': rv.idconsultations, 'date_consultation': rv.date_consultation, 'heure_consultation': rv.heure_consultation ,'idpat': rv.idpat.idusers } for rv in rendez_vous]
+            rendez_vous_data = [{'id': rv.idconsultations, 'date_consultation': rv.date_consultation, 'heure_consultation': rv.heure_consultation ,'idpat': rv.idpat.idusers,'idmedId':rv.idmede.idusers } for rv in rendez_vous]
             print(rendez_vous_data)
             # Retourner les données sous forme de réponse JSON avec les en-têtes CORS appropriés
             response = JsonResponse({'rendez_vous': rendez_vous_data}, safe=False)
@@ -306,14 +308,6 @@ def rendez_vous_medecin(request, idmed_id):
         return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
 
 
-
-from django.http import JsonResponse
-from .models import patient
-
-from django.http import JsonResponse
-from .models import patient
-
-from django.http import JsonResponse
 
 @require_http_methods(["GET"])
 def get_patient_info(request, patient_id):
@@ -516,13 +510,17 @@ def get_consultation_detail(request,id_conslt):
                 'heure': consultation.heure_consultation,  # Assurez-vous d'utiliser les bons noms de champs
                 'ordonnance': consultation.ordonnance,
                 'bilan': consultation.bilan,
+                'bilan_pdf': consultation.bilan_pdf.url if consultation.bilan_pdf else None,
                 'patient': {
-                    'id': consultation.idpat.idusers,  # Inclure l'ID du patient
-                    'nom': consultation.idpat.nom,  # Inclure le nom du patient
-                    'prenom': consultation.idpat.prenom,  # Inclure le prénom du patient
-                    'email': consultation.idpat.email  # Inclure l'email du patient, etc.
-                    # Ajoutez d'autres champs du patient selon vos besoins
+                'id': consultation.idpat.idusers,  # Inclure l'ID du patient
+                'nom': consultation.idpat.nom,  # Inclure le nom du patient
+                'prenom': consultation.idpat.prenom,  # Inclure le prénom du patient
+                'email': consultation.idpat.email  # Inclure l'email du patient  # Ajoutez d'autres champs du patient selon vos besoins
+                },
+                'medecin': {
+                'idmedecin': consultation.idmede.idusers
                 }
+
                 # Ajoutez d'autres champs selon vos besoins
             }
             response = JsonResponse(data)
@@ -552,23 +550,34 @@ def update_consultation(request, id_conslt):
         return JsonResponse({'success': True})
     else:
         response = JsonResponse({'error': 'Méthode non autorisée'}, status=405)
-        response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"  # Spécifiez les méthodes HTTP autorisées
+        response["Access-Control-Allow-Origin"] = "http://localhost:5173"  
+        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"  
         return response
-
 
 
 
 from django.contrib.auth.decorators import login_required
 
-@login_required
+# Endpoint pour enregistrer le fichier PDF
 @csrf_exempt
-def import_pdf(request, consultation_id):
-    consultation = get_object_or_404(consultations, pk=consultation_id)
-    if request.method == 'POST' and request.FILES['pdf_file']:
+@require_http_methods(["POST"])
+def save_pdf(request, id_conslt):
+    consultation = get_object_or_404(consultations, idconsultations=id_conslt)
+    if request.method == 'POST' and request.FILES.get('pdf_file'):
         pdf_file = request.FILES['pdf_file']
-        # Code pour sauvegarder le fichier PDF et le traiter si nécessaire
-        # Une fois le traitement terminé, vous pouvez rediriger l'utilisateur vers la page de consultation
+        consultation.bilan_pdf = pdf_file
+        consultation.save()
         return JsonResponse({'success': True})
+        print("dello")
     else:
         return JsonResponse({'error': 'Veuillez fournir un fichier PDF valide.'}, status=400)
+    
+
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_consultation(request, id_conslt):
+    consultation = get_object_or_404(consultations, idconsultations=id_conslt)
+
+    if request.method == "DELETE":
+        consultation.delete()
+        return JsonResponse({"message": "Consultation deleted successfully"})

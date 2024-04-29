@@ -72,6 +72,8 @@ class consultations(models.Model):
     ordonnance = models.TextField(default="")
     description = models.TextField(default="")
     bilan = models.TextField(default="")
+    bilan_pdf = models.FileField(upload_to='bilans/', null=True, blank=True ,default="")
+
     def __str__(self):
         return f"Consultation ID: {self.idconsultations}, Patient: {self.idpat.nom} {self.idpat.prenom}, Medecin: {self.idmede.nom} {self.idmede.prenom}, Date: {self.date_consultation}"
     def get_absolute_url(self):

@@ -5,10 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import registpatientImage from "../pages/editpatient.png";
 import "../styles/FormPatient.css";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
-
-const FormPatient = ({medecinId}) => {
+const FormPatient = () => {
+  const { medecinId } = useParams();
   const [patient, setPatient] = useState({
     nom: '',
     prenom: '',
@@ -28,6 +29,7 @@ const FormPatient = ({medecinId}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const handlePatientInputChange = (e) => {
     setPatient({ ...patient, [e.target.name]: e.target.value });
   };
@@ -45,7 +47,7 @@ const FormPatient = ({medecinId}) => {
     try {
       const dateFormatted = `${patient.date_de_naissance.getFullYear()}-${(patient.date_de_naissance.getMonth() + 1).toString().padStart(2, '0')}-${patient.date_de_naissance.getDate().toString().padStart(2, '0')}`;
       console.log("Données du formulaire :", patient);
-      const response = await api.post('api/user/patientReg/', {
+      const response = await api.post(`api/user/patientReg/${medecinId}`, {
         nom: patient.nom,
         prenom: patient.prenom,
         poids: patient.poids,
@@ -65,15 +67,16 @@ const FormPatient = ({medecinId}) => {
       });
       console.log('Valeur de success :', response.data.success);
       if (response.data.success) {
-        //const idmed = response.data.idmed;
-        //console.log('Identifiant du médecin:', idMedecin);
         navigate(`/login/home_medecin/${medecinId}`, { state: { idmed_id: medecinId } });
-
       } else {
         console.error("L'inscription a échoué.");
       }
     } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error); // Affichage du message d'erreur provenant de l'API
+      } else {
+        console.error("Erreur lors de l'inscription :", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -81,7 +84,6 @@ const FormPatient = ({medecinId}) => {
   
   return (
     <div className="container_registpatient">
-        
     <h1 className="title_patients_registpatient">Informations du patient</h1>
     <img src={registpatientImage} alt="registpatient" className="editpatient_registpatient" />
 

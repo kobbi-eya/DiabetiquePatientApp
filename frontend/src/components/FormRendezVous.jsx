@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/CreateRv.css";
 import createrv from "./createrv.png";
 import api from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 
 
 // Définition de la fonction fetchPatientIdByEmail
@@ -18,7 +18,8 @@ import { useNavigate } from 'react-router-dom';
     }
 };*/
 
-const FormRv = ({ medecinId }) => {
+const FormRv = () => {
+    const { medecinId } = useParams(); 
     const [rendezVous, setRendezVous] = useState({
         email: '',
         dateConsultation: new Date(),
@@ -47,7 +48,7 @@ const FormRv = ({ medecinId }) => {
         try {
             const dateFormatted = `${rendezVous.dateConsultation.getFullYear()}-${(rendezVous.dateConsultation.getMonth() + 1).toString().padStart(2, '0')}-${rendezVous.dateConsultation.getDate().toString().padStart(2, '0')}`;
             console.log("Données du formulaire :", rendezVous);
-            const response = await api.post('/api/user/createRv/', {
+            const response = await api.post(`/api/user/createRv/${medecinId}`, {
                 email: rendezVous.email,
                 dateConsultation: dateFormatted,
                 heureConsultation: rendezVous.heureConsultation,
@@ -87,7 +88,15 @@ const FormRv = ({ medecinId }) => {
     
     
     return (
-        <div className="container">
+      <div className="container">
+        <nav>
+         <ul>
+          <li onClick={() => navigate(`/login/home_medecin/${medecinId}`)}>Accueil</li>
+          <li>Patients</li>
+          <li>Consultations</li>
+          <li>Déconnexion</li>
+          </ul>
+        </nav>
             <h1 className="title_rv">Créer un rendez-vous</h1>
             <div className="format">
                 <div className="right">

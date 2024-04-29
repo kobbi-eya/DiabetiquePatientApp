@@ -11,6 +11,7 @@ import CarnetMedical  from "./pages/carnetmedicale"
 import axios from 'axios';
 import Listepatient from "./pages/listepatients" 
 import Consultation from  "./components/Consultation"
+import HomePatient from "./pages/HomePatient"
 axios.defaults.withCredentials = true;
 
 function Logout() {
@@ -37,6 +38,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/home_patient/:IdPatient" element={<HomePatient />} />
         <Route path="/login/registerpatient/:medecinId" element={<RegisterPatient />} />
         <Route path="/login/CreateRv/:medecinId" element={<CreateRv />} />
         <Route path="/login/home_medecin/:medecinId" element={<HomeMedecin />} />

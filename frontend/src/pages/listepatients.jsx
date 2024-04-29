@@ -218,6 +218,14 @@ function Listepatient() {
 
   return (
     <div className="container">
+       <nav>
+         <ul>
+          <li>Accueil</li>
+          <li>Patients</li>
+          <li>Consultations</li>
+          <li>Déconnexion</li>
+          </ul>
+        </nav>
       <button className="list_patients_button" onClick={handleShowPatients}>
         Liste des Patients
       </button>

@@ -43,7 +43,6 @@ function CarnetMedical() {
     
   };
   
-
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -79,14 +78,6 @@ function CarnetMedical() {
 
   return (
     <div className="container">
-      <nav>
-        <ul>
-          <li>Accueil</li>
-          <li>Patients</li>
-          <li>Consultations</li>
-          <li>Déconnexion</li>
-        </ul>
-      </nav>
       <div className="carnet-medical">
         <img src={carnet} alt="carnet" className="carnet" />
         <h1>Carnet Médical</h1>
