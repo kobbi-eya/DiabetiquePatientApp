@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import api from "../api";
-
+import ChangeDoctorForm from "../components/FormChangementDoctor";
 function HomePatient() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -17,6 +17,11 @@ function HomePatient() {
       navigate(`/carnet_medical/${patientId}`);
     }
   };
+  const handleRequestChangeDoctor = () => {
+    if (patientId) {
+      navigate(`/DemandeChangementDoctor/${patientId}`);
+    }
+  };
 
   return (
     <div>
@@ -24,6 +29,10 @@ function HomePatient() {
       <button className="create_rv_button" onClick={handleConsultMedicalRecord}>
         Consulter le carnet médical
       </button>
+      <button className="request_change_doctor_button" onClick={handleRequestChangeDoctor}>
+        Demander un changement de médecin
+      </button>
+      
     </div>
   );
 }

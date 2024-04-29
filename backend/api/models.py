@@ -78,3 +78,17 @@ class consultations(models.Model):
         return f"Consultation ID: {self.idconsultations}, Patient: {self.idpat.nom} {self.idpat.prenom}, Medecin: {self.idmede.nom} {self.idmede.prenom}, Date: {self.date_consultation}"
     def get_absolute_url(self):
         return reverse('consultation_detail', args=[str(self.idconsultations)])
+    
+class DoctorChangeRequest(models.Model):
+    patient = models.ForeignKey(patient, on_delete=models.CASCADE)
+    new_doctor = models.ForeignKey(medecin, on_delete=models.CASCADE)
+    date_requested = models.DateTimeField(auto_now_add=True)
+    status_choices = [
+        ('PENDING', 'Pending'),
+        ('ACCEPTED', 'Accepted'),
+        ('REJECTED', 'Rejected')
+    ]
+    status = models.CharField(max_length=10, choices=status_choices, default='PENDING')
+
+    def __str__(self):
+        return f"Change Request for {self.patient} to {self.new_doctor} ({self.status})"

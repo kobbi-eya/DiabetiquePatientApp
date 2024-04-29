@@ -79,6 +79,9 @@ function HomeMedecin() {
               <button className="list_patients_button" onClick={() => navigate(`/login/ListePatient/${idmedId}`)}>
                 List Patients
               </button>
+              <button className="change_requests_button" onClick={() => navigate(`/Requests/${idmedId}`)}>
+                Change Requests
+              </button>
             </div>
           )}
         </div>
