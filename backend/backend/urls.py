@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 #from api.views import UserLoginAPI
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
-from api.views import accept_change_request, change_doctor_request, create_rendez_vous, delete_consultation, get_change_requests_for_patient, get_consultation_detail, get_consultations_patient, get_consultations_patient_uniquement, get_patient_info, get_patient_par_medecin, get_pending_change_requests, register_medecin, register_patient_by_medecin, reject_change_request, rendez_vous_medecin, save_pdf, update_consultation, update_patient, user_login
+from api.views import accept_change_request, change_doctor_request, create_rendez_vous, delete_consultation, get_change_requests_for_patient, get_consultation_detail, get_consultations_patient, get_consultations_patient_uniquement, get_patient_info, get_patient_par_medecin, get_pending_change_requests, register_medecin, register_patient_by_medecin, reject_change_request, rendez_vous_medecin, rendez_vous_patient, save_pdf, update_consultation, update_patient, user_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +29,8 @@ urlpatterns = [
     path('api/doctor/change_requests/<int:request_id>/reject/',reject_change_request,name='reject_change_request'),
     #path('api/conslt/Pat/<int:patient_id>/',get_consultations_patient_uniquement,name='get_consultations_patient_uniquement'),
     path('api/patients/affichage/change_doctor/<int:patient_id>/',get_change_requests_for_patient,name='get_change_requests_for_patient'),
-    
+   # path('send-test-email/', send_test_email, name='send_test_email'),
+    path('api/rendez-vous-patient/<int:patient_id>/', rendez_vous_patient, name='rendez_vous_patient'),
     path('', include('api.urls')),
 ]
 # backend/urls.py

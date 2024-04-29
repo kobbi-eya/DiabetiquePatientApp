@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import '../styles/CarnetMedicale.css';
 import infopers from './infopers.png';
 import infopers1 from './infopers1.png';
@@ -75,6 +75,7 @@ function CarnetMedicalpat() {
           </div>
         </TabWidget>
       </div>
+      <Link to={`/home_patient/${patientId}`} className="btn btn-primary">Retourner à l'accueil</Link>
     </div>
   );
 }

@@ -22,6 +22,11 @@ function HomePatient() {
       navigate(`/DemandeChangementDoctor/${patientId}`);
     }
   };
+  const handleAgenda = () => {
+    if (patientId) {
+      navigate(`/Agenda/${patientId}`);
+    }
+  };
 
   return (
     <div>
@@ -31,6 +36,9 @@ function HomePatient() {
       </button>
       <button className="request_change_doctor_button" onClick={handleRequestChangeDoctor}>
         Demander un changement de médecin
+      </button>
+      <button className="request_change_doctor_button" onClick={handleAgenda}>
+        Agenda
       </button>
       
     </div>

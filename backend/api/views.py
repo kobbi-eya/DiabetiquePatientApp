@@ -1,7 +1,7 @@
 import json
 import re
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
@@ -111,7 +111,13 @@ def register_medecin(request):
         # Si la requête n'est pas de type POST, retournez une erreur
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
     
-
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 """def send_password_email(recipient_email, password):
     # Configuration de l'e-mail
     sender_email = "votre_email@gmail.com"  # Modifier avec votre adresse e-mail
@@ -130,15 +136,53 @@ def register_medecin(request):
     # Connexion au serveur SMTP et envoi de l'e-mail
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
         server.login(sender_email, 'votre_mot_de_passe')  # Modifier avec votre mot de passe
-        server.send_message(message)"""      
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-@csrf_exempt
+        server.send_message(message)"""    
+"""import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+def send_email_to_patient(email, password, medecin_email,medecin_password):
+    try:
+        smtp_server = 'smtp.gmail.com'
+        smtp_port = 587
+        smtp_username = medecin_email  # Adresse e-mail du médecin
+        smtp_password = medecin_password  # Mot de passe du médecin
 
+        message = MIMEMultipart()
+        message['From'] = smtp_username  # Utilisation de l'adresse e-mail du médecin comme expéditeur
+        message['To'] = email
+        message['Subject'] = 'Votre nouveau mot de passe'
+
+        body = f'Bonjour,\n\nVoici votre nouveau mot de passe : {password}\n\nCordialement,\nVotre médecin'
+
+        message.attach(MIMEText(body, 'plain'))
+
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+
+        server.sendmail(smtp_username, email, message.as_string())
+
+        server.quit()
+    except Exception as e:
+        print(f"Erreur lors de l'envoi de l'e-mail : {e}")
+@csrf_exempt
+def send_test_email(request):
+    subject = 'Your Password'
+    message = 'Test body'
+    email_from = 'eya.kobbi@gmail.com'
+    recipient_list = ['meriammaryouma9@gmail.com']
+
+    try:
+        send_mail(
+            subject,
+            message,
+            email_from,
+            recipient_list,
+            fail_silently=False,
+        )
+        return JsonResponse({'message': 'Test email sent.'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)"""
 
 @csrf_exempt
 def register_patient_by_medecin(request, idmedId):
@@ -189,19 +233,19 @@ def register_patient_by_medecin(request, idmedId):
             )
 
             # Vous n'avez pas besoin d'appeler set_password explicitement car il est déjà appelé dans create_user
-
+           # send_email_to_patient(email, password,medecin_obj.email,medecin_obj.password),
             return JsonResponse({'redirect': '/home_medecin', "success": True})
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 
 
-def send_password_email(email, password, from_email):
+"""def send_password_email(email, password, from_email):
     subject = 'Votre mot de passe pour accéder au système'
     html_message = render_to_string('password_email.html', {'password': password})
     plain_message = strip_tags(html_message)
     to = email
-    send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+    send_mail(subject, plain_message, from_email, [to], html_message=html_message)"""
 
 
 
@@ -273,6 +317,7 @@ def create_rendez_vous(request,idmedId):
                 idmede_id=idmede,
                 date_consultation=date_consultation,
                 heure_consultation=heure_consultation,
+                description=notes,
             )
             rendez_vous.save()
 
@@ -296,6 +341,33 @@ def rendez_vous_medecin(request, idmed_id):
             # Serializer les rendez-vous si nécessaire
             rendez_vous_data = [{'id': rv.idconsultations, 'date_consultation': rv.date_consultation, 'heure_consultation': rv.heure_consultation ,'idpat': rv.idpat.idusers,'idmedId':rv.idmede.idusers } for rv in rendez_vous]
             print(rendez_vous_data)
+            # Retourner les données sous forme de réponse JSON avec les en-têtes CORS appropriés
+            response = JsonResponse({'rendez_vous': rendez_vous_data}, safe=False)
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
+            response["Access-Control-Allow-Methods"] = "GET"  # Spécifiez les méthodes HTTP autorisées
+            return response
+        except Exception as e:
+            # Gérer les erreurs et retourner une réponse d'erreur si nécessaire
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Si la méthode de requête n'est pas GET, renvoyer une réponse d'erreur
+        return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
+
+
+
+
+@require_http_methods(["GET", "OPTIONS"])
+def rendez_vous_patient(request, patient_id):
+    if request.method == 'GET':
+        try:
+            # Récupérer les rendez-vous (consultations) pour le patient spécifié
+            Patient = get_object_or_404(patient, idusers=patient_id)
+            rendez_vous = consultations.objects.filter(idpat=patient_id, bilan='', ordonnance='')
+
+            # Serializer les rendez-vous si nécessaire
+            rendez_vous_data = [{'id': rv.idconsultations, 'date_consultation': rv.date_consultation, 'heure_consultation': rv.heure_consultation ,'idpat': rv.idpat.idusers,'idmedId':rv.idmede.idusers,'nomMedecin':rv.idmede.nom,'prenomMedecin':rv.idmede.prenom ,'mobile':rv.idmede.mobile} for rv in rendez_vous]
+            print(rendez_vous_data)
+
             # Retourner les données sous forme de réponse JSON avec les en-têtes CORS appropriés
             response = JsonResponse({'rendez_vous': rendez_vous_data}, safe=False)
             response["Access-Control-Allow-Origin"] = "http://localhost:5173"  # Remplacez cette URL par celle de votre frontend
@@ -346,11 +418,6 @@ def get_patient_info(request, patient_id):
         except Exception as e:
             # Gérer les autres erreurs et retourner une réponse d'erreur
             return JsonResponse({'error': str(e)}, status=500)
-
-
-
-
-
 
 @csrf_exempt
 @require_http_methods(['PUT', 'POST'])
@@ -413,52 +480,6 @@ def get_patient_par_medecin(request, idmedId):
     else:
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
 
-"""@require_http_methods(["GET"])
-def get_patient_par_medecin(request, idmed_id):
-    print('1')
-    if request.method == 'GET':
-        try:
-            print('2')
-            print("Trying to retrieve doctor with ID:", idmed_id)
-            # Récupérez le médecin par ID
-            medecin_obj = medecin.objects.get(idusers=idmed_id)
-            print('3')
-            # Récupérez tous les patients associés à ce médecin
-            patients = patient.objects.filter(idmed=medecin_obj)
-            print('4')
-            # Formatez les données des patients pour le JSON
-            data = [
-                {
-                    "nom": p.nom,
-                    "prenom": p.prenom,
-                    "age": p.date_de_naissance.year,
-                    "poids": p.poids,
-                    "taille": p.taille,
-                    "groupe_sanguin": p.groupe_sanguin,
-                    "sexe": p.sexe,
-                }
-                for p in patients
-            ]
-            
-            response = JsonResponse({"patients": data, "redirect": "/liste_patient", "success": True})
-            response["Access-Control-Allow-Origin"] = "*"
-            response["Access-Control-Allow-Methods"] = "GET"
-            response["Access-Control-Allow-Headers"] = "Content-Type"
-            return response
-        
-        except medecin.DoesNotExist:
-            print("Médecin introuvable")
-            return JsonResponse({"error": "Médecin introuvable."}, status=404)
-        
-        except Exception as e:
-            print("An unexpected error occurred:", str(e))
-            return JsonResponse({"error": "Une erreur inattendue s'est produite."}, status=500)
-    
-    else:
-        print("Invalid method")"""
-
-from django.http import JsonResponse
-from .models import patient, consultations
 from django.db.models import Q
 
 @require_http_methods(["GET"])
@@ -466,7 +487,6 @@ def get_consultations_patient(request, patient_id):
     if request.method == 'GET':
         try:
            
-
             # Récupérer les consultations du patient spécifié avec ordonnance non vide
             patient_consultations = consultations.objects.filter(
                 Q(idpat_id=patient_id) & ~Q(ordonnance=''))
@@ -494,8 +514,6 @@ def get_consultations_patient(request, patient_id):
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
 
 
-
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 from .models import consultations  # Assurez-vous d'importer correctement le modèle
@@ -556,9 +574,6 @@ def update_consultation(request, id_conslt):
         return response
 
 
-
-from django.contrib.auth.decorators import login_required
-
 # Endpoint pour enregistrer le fichier PDF
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -569,7 +584,6 @@ def save_pdf(request, id_conslt):
         consultation.bilan_pdf = pdf_file
         consultation.save()
         return JsonResponse({'success': True})
-        print("dello")
     else:
         return JsonResponse({'error': 'Veuillez fournir un fichier PDF valide.'}, status=400)
     
@@ -584,30 +598,6 @@ def delete_consultation(request, id_conslt):
         return JsonResponse({"message": "Consultation deleted successfully"})
 
 
-"""def medecin_info_patient(request, patient_id):
-    try:
-        # Récupérer l'objet Patient à partir de l'identifiant patient_id
-        pat = patient.objects.get(pk=patient_id)
-        # Récupérer l'identifiant du médecin associé à ce patient
-        medecin_id = pat.idmed_id
-        # Récupérer l'objet Medecin correspondant à partir de l'identifiant medecin_id
-        medec = medecin.objects.get(pk=medecin_id)
-        # Sérialiser les informations du médecin
-        medecin_info = {
-            'id': medec.id,
-            'nom': medec.nom,
-            'prenom': medec.prenom,
-            'email': medec.email,
-            # Ajoutez d'autres champs selon vos besoins
-        }
-        # Renvoyer les informations du médecin en tant que réponse JSON
-        return JsonResponse({'medecin_info': medecin_info})
-    except Patient.DoesNotExist:
-        return JsonResponse({'error': 'Patient not found'}, status=404)
-    except Medecin.DoesNotExist:
-        return JsonResponse({'error': 'Medecin not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)"""
 from .serializers import DoctorChangeRequestSerializer 
 from .models import medecin, patient
 @csrf_exempt

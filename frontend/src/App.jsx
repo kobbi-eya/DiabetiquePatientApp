@@ -15,6 +15,7 @@ import HomePatient from "./pages/HomePatient"
 import CarnetMedicalPat from "./pages/CarnetMedicalpat"
 import ChangeDoctorForm from "./components/FormChangementDoctor"
 import DoctorChangeRequests from "./pages/Requests"
+import Agenda from "./components/AgendaPatient"
 axios.defaults.withCredentials = true;
 
 function Logout() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/carnet_medical/:patientId" element={<CarnetMedicalPat />} />
         <Route path="/DemandeChangementDoctor/:patientId" element={<ChangeDoctorForm />} />
         <Route path="Requests/:medId" element={<DoctorChangeRequests />} />
+        <Route path="/Agenda/:patientId" element={<Agenda />} />
         
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
