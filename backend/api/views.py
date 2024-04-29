@@ -248,7 +248,8 @@ def create_rendez_vous(request,idmedId):
             existing_rendez_vous_same_time = consultations.objects.filter(
                 idpat=idpat,
                 date_consultation=date_consultation,
-                heure_consultation=heure_consultation
+                heure_consultation=heure_consultation,
+                description=notes
             ).exists()
             if existing_rendez_vous_same_time:
                 return JsonResponse({"error": "Ce créneau est déjà pris pour ce patient."}, status=400)
@@ -478,7 +479,7 @@ def get_consultations_patient(request, patient_id):
                                    'ordonnance': consult.ordonnance,
                                    'description': consult.description,
                                    'bilan': consult.bilan,
-                                   #'medecin': f"{consult.idmede.nom} {consult.idmede.prenom}"
+                                   'medecin': f"{consult.idmede.nom} {consult.idmede.prenom}"
                                    # Ajouter d'autres champs du modèle consultation selon vos besoins
                                    } for consult in patient_consultations]
             print(consultations_data)
@@ -581,3 +582,29 @@ def delete_consultation(request, id_conslt):
     if request.method == "DELETE":
         consultation.delete()
         return JsonResponse({"message": "Consultation deleted successfully"})
+
+
+"""def medecin_info_patient(request, patient_id):
+    try:
+        # Récupérer l'objet Patient à partir de l'identifiant patient_id
+        pat = patient.objects.get(pk=patient_id)
+        # Récupérer l'identifiant du médecin associé à ce patient
+        medecin_id = pat.idmed_id
+        # Récupérer l'objet Medecin correspondant à partir de l'identifiant medecin_id
+        medec = medecin.objects.get(pk=medecin_id)
+        # Sérialiser les informations du médecin
+        medecin_info = {
+            'id': medec.id,
+            'nom': medec.nom,
+            'prenom': medec.prenom,
+            'email': medec.email,
+            # Ajoutez d'autres champs selon vos besoins
+        }
+        # Renvoyer les informations du médecin en tant que réponse JSON
+        return JsonResponse({'medecin_info': medecin_info})
+    except Patient.DoesNotExist:
+        return JsonResponse({'error': 'Patient not found'}, status=404)
+    except Medecin.DoesNotExist:
+        return JsonResponse({'error': 'Medecin not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)"""

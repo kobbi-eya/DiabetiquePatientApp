@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/update/consultations/<int:id_conslt>/',update_consultation, name='update_consultation'),
     path('api/save/pdf/<int:id_conslt>/', save_pdf, name='save_pdf'),
     path('api/delete/consultations/<int:id_conslt>/',delete_consultation,name='delete_consultation'),
+    #path('/api/doctors/<int:patient_id>/',medecin_info_patient,name='medecin_info_patient'),
     path('', include('api.urls')),
 ]
 # backend/urls.py
