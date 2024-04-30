@@ -63,7 +63,6 @@ function ChangeDoctorForm() {
             <th>Mobile</th>
             <th>nom & prenom</th>
             <th>specialité</th>
-            
           </tr>
         </thead>
         <tbody>
