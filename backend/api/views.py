@@ -771,6 +771,7 @@ def get_change_requests_for_patient(request, patient_id):
                      'newDoctorEmail': request.new_doctor.email,
                      'newDoctorNom': request.new_doctor.nom,
                      'newDoctorPrenom': request.new_doctor.prenom,
+                     'newDoctorSpeciality':request.new_doctor.specialite,
                      'status': request.status, 
                      'newDoctorMobile': request.new_doctor.mobile} for request in change_requests]
             # Répondre avec les données JSON

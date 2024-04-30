@@ -61,7 +61,9 @@ function ChangeDoctorForm() {
             <th>Nouveau Médecin</th>
             <th>État</th>
             <th>Mobile</th>
-            <th>Email</th>
+            <th>nom & prenom</th>
+            <th>specialité</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -71,8 +73,10 @@ function ChangeDoctorForm() {
               <td>{request.status === 'PENDING' ? 'En attente' : request.status}</td>
               {request.status === 'ACCEPTED' && (
                 <>
-                  <td>{request.newDoctorMobile}</td>
-                  <td>{request.newDoctorEmail}</td>
+                  <td>pour prendre un rendez-vous veuillez nous contacter sur {request.newDoctorMobile}</td>
+                  <td>{request.newDoctorNom}&{request.newDoctorPrenom}</td>
+                  <td>{request.newDoctorSpeciality}</td>
+
                 </>
               )}
             </tr>
