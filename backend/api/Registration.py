@@ -59,6 +59,47 @@ def register_medecin(request):
     else:
         # Si la requête n'est pas de type POST, retournez une erreur
         return JsonResponse({"error": "Méthode non autorisée"}, status=405)
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from .models import medecin
+#from .serializers import MedecinSerializer
+from django.http import JsonResponse
+
+"""@csrf_exempt
+def register_medecin(request):
+    if request.method == 'POST':
+        serializer = MedecinSerializer(data=request.data)
+        if serializer.is_valid():
+            # Vérifier si l'email existe déjà
+            email = serializer.validated_data['email']
+            if medecin.objects.filter(email=email).exists():
+                return JsonResponse({'errors': {'email': 'Cet email est déjà utilisé par un autre médecin.'}}, status=400)
+            
+            # Vérifier si les mots de passe correspondent
+            password = serializer.validated_data['password']
+            confirm_password = serializer.validated_data['confirm_password']
+            if password != confirm_password:
+                return JsonResponse({'errors': {'password': 'Les mots de passe ne correspondent pas.'}}, status=400)
+            
+            # Créer le médecin s'il n'y a pas d'erreurs
+            medecin_obj = medecin.objects.create(
+                nom=serializer.validated_data['nom'], 
+                prenom=serializer.validated_data['prenom'], 
+                date_de_naissance=serializer.validated_data['date_de_naissance'], 
+                specialite=serializer.validated_data['specialite'], 
+                mobile=serializer.validated_data['mobile'], 
+                email=email,
+                role='MEDECIN'
+            )
+            medecin_obj.set_password(password)
+            medecin_obj.save()
+            
+            return JsonResponse({'redirect': '/login', "success": True})
+        else:
+            # Renvoyer les erreurs de validation sous forme de JsonResponse
+            return JsonResponse({'errors': serializer.errors}, status=400)
+    else:
+        return JsonResponse({"error": "Méthode non autorisée"}, status=405)"""
 
 
 @csrf_exempt

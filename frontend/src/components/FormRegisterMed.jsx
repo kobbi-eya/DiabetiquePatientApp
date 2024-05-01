@@ -31,10 +31,10 @@ const FormRegisterMed = () => {
     setMedecin({ ...medecin, date_de_naissance:dateSansHeure });
   };
   
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const dateFormatted = `${medecin.date_de_naissance.getFullYear()}-${(medecin.date_de_naissance.getMonth() + 1).toString().padStart(2, '0')}-${medecin.date_de_naissance.getDate().toString().padStart(2, '0')}`;
       console.log("Données du formulaire :", medecin);
@@ -44,22 +44,28 @@ const FormRegisterMed = () => {
         specialite: medecin.specialite,
         mobile: medecin.mobile,
         email: medecin.email,
-        date_de_naissance:dateFormatted, // Utilisez medecin.date_de_naissance directement
+        date_de_naissance: dateFormatted,
         password: password,
         confirm_password: confirmPassword,
       });
+  
       console.log('Valeur de success :', response.data.success);
       if (response.data.success) {
         navigate('/login');
       } else {
         console.error("L'inscription a échoué.");
       }
-    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-    } finally {
-      setLoading(false);
+    }  catch (error) {
+      console.error("Erreur lors de l'inscription du patient par un médecin :", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        const errorMessage = error.response.data.error;
+        alert(errorMessage); // Afficher l'erreur dans une alerte
+      } else {
+        alert("Une erreur inconnue s'est produite.");
+      }
     }
   };
+  
 
   return (
     <div className="container_registmed">

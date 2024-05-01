@@ -91,7 +91,7 @@ function HomeMedecin({ onLogout }) {
         </div>
     
       </div>
-      {Array.isArray(rendezVousData) && <Calendrier rendezVousData={rendezVousData} />} 
+      {Array.isArray(rendezVousData) && <Calendrier rendezVousData={rendezVousData}/>} 
     </div>
   );
 }
