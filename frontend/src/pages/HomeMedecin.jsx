@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Calendrier from "../components/Calendrier";
 import api from "../api";
 
-function HomeMedecin() {
+function HomeMedecin({ onLogout }) {
   const { state } = useLocation();
   const idmedId = state ? state.idmed_id : null;
   const navigate = useNavigate();
@@ -53,7 +53,10 @@ function HomeMedecin() {
       });
   };
   
-
+  const handleLogout = () => {
+    localStorage.clear(); 
+    navigate("/login"); 
+  };
   return (
     <div className="container">
       <nav>
@@ -82,6 +85,7 @@ function HomeMedecin() {
               <button className="change_requests_button" onClick={() => navigate(`/Requests/${idmedId}`)}>
                 Change Requests
               </button>
+              <button onClick={handleLogout}>Déconnexion</button>
             </div>
           )}
         </div>

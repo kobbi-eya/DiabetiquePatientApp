@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import registmedImage from './registmed.png';
+import registmedImage from '../images/registmed.png';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/RegistMed.css';

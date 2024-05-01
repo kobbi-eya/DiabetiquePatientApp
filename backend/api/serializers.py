@@ -9,8 +9,6 @@ class ConsultationsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-
 class DoctorChangeRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorChangeRequest

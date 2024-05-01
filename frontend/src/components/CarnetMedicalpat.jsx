@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams,Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import '../styles/CarnetMedicale.css';
-import infopers from './infopers.png';
-import infopers1 from './infopers1.png';
-import carnet from './carnet.png';
+import infopers from '../images/infopers.png';
+import infopers1 from '../images/infopers1.png';
+import carnet from '../images/carnet.png';
 import api from "../api";
-import TabWidget from './TabWidget';
+import TabWidget from '../pages/TabWidget';
 
 function CarnetMedicalpat() {
   const { patientId } = useParams();
   const [patientInfo, setPatientInfo] = useState(null);
   const [consultations, setConsultations] = useState([]);
+  const [selectedConsultation, setSelectedConsultation] = useState(null);
 
   useEffect(() => {
     // Appels à l'API pour récupérer les informations du patient et les consultations
@@ -61,21 +62,25 @@ function CarnetMedicalpat() {
 
           <div label="Consultations">
             <div className="consultations-container">
-              {consultations.map((consultation) => (
-                <div key={consultation.id} className="consultation">
-                  <p>Date de consultation: {consultation.date_consultation}</p>
-                  <p>Heure de consultation: {consultation.heure_consultation}</p>
-                  <p>Ordonnance: {consultation.ordonnance}</p>
-                  <p>Description: {consultation.description}</p>
-                  <p>Bilan: {consultation.bilan}</p>
-                  <p>Médecin: {consultation.medecin}</p>
-                </div>
+              {consultations.map((consultation, index) => (
+                <button key={consultation.id} onClick={() => setSelectedConsultation(consultation)}>{`Consultation ${index + 1}`}</button>
               ))}
             </div>
+            {selectedConsultation && (
+              <div className="consultation-details">
+                <p>Médecin: {selectedConsultation.medecin}</p>
+                <p>Date de consultation: {selectedConsultation.date_consultation}</p>
+                <p>Heure de consultation: {selectedConsultation.heure_consultation}</p>
+                <p>Ordonnance: {selectedConsultation.ordonnance}</p>
+                <p>Description: {selectedConsultation.description}</p>
+                <p>Bilan: {selectedConsultation.bilan}</p>
+                <p>Bilan PDF: <a href={selectedConsultation.bilan_pdf} target="_blank" rel="noopener noreferrer">Voir le PDF</a></p>
+              </div>
+            )}
           </div>
         </TabWidget>
       </div>
-      <Link to={`/home_patient/${patientId}`} className="btn btn-primary">Retourner à l'accueil</Link>
+      <Link to={`/home_patient/${patientId}/`} className="btn btn-primary">Retourner à l'accueil</Link>
     </div>
   );
 }

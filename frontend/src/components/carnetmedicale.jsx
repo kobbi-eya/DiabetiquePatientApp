@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import '../styles/CarnetMedicale.css';
-import infopers from './infopers.png';
-import infopers1 from './infopers1.png';
-import carnet from './carnet.png';
-import consult1 from './consult1.png';
+import infopers from '../images/infopers.png';
+import infopers1 from '../images/infopers1.png';
+import carnet from '../images/carnet.png';
+import consult1 from '../images/consult1.png';
 import api from "../api";
-import TabWidget from './TabWidget'; // Assurez-vous que le chemin d'importation est correct
+import TabWidget from '../pages/TabWidget'; // Assurez-vous que le chemin d'importation est correct
 
 function CarnetMedical() {
   const { patientId } = useParams();

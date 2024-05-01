@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import api from "../api";
-import ChangeDoctorForm from "../components/FormChangementDoctor";
+
 function HomePatient() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -27,7 +27,10 @@ function HomePatient() {
       navigate(`/Agenda/${patientId}`);
     }
   };
-
+  const handleLogout = () => {
+    localStorage.clear(); 
+    navigate("/login"); 
+  };
   return (
     <div>
       <h1>Home Patient</h1>
@@ -40,6 +43,8 @@ function HomePatient() {
       <button className="request_change_doctor_button" onClick={handleAgenda}>
         Agenda
       </button>
+      <button onClick={handleLogout}>Déconnexion</button>
+
       
     </div>
   );

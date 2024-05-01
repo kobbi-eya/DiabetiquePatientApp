@@ -4,10 +4,10 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import '../styles/Calendrier.css';
-import Agenda from "./agenda.png";
-import logo from "./logo.png";
-import Calendrierr from "./calendrier.png";
-import Calendrier_1 from './calendrier_1.png'; // Importez les événements
+import Agenda from "../images/agenda.png";
+import logo from "../images/logo.png";
+import Calendrierr from "../images/calendrier.png";
+import Calendrier_1 from '../images/calendrier_1.png'; // Importez les événements
 import { useNavigate } from "react-router-dom";
 const localizer = momentLocalizer(moment);
 

@@ -3,8 +3,8 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/FormLogin.css";
-import logo from "./logo.png";
-import doctor from "./doctor.png";
+import logo from "../images/logo.png";
+import doctor from "../images/doctor.png";
 import axios from "axios"; // Importez Axios
 import RegisterPatient from "../pages/RegisterPatient";
 function FormLogin() {
@@ -23,8 +23,12 @@ function FormLogin() {
           const res = await api.post("/api/user/login/", { email, password });
           console.log('API Response:', res.data);
           // Vérifier si la réponse contient les clés attendues
-          if ('role' in res.data) {
+          
+           
+           
+          if ('role' in res.data ) {
              //localStorage.setItem(ACCESS_TOKEN, res.data.access);
+             //console.log(ACCESS_TOKEN)
              //localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
       
             // Rediriger en fonction du rôle de l'utilisateur

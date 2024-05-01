@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/CreateRv.css";
-import createrv from "./createrv.png";
+import createrv from "../images/createrv.png";
 import api from '../api';
 import { useNavigate,useParams } from 'react-router-dom';
 

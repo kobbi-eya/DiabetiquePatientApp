@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import registpatientImage from "../pages/editpatient.png";
+import registpatientImage from "../images/editpatient.png";
 import "../styles/FormPatient.css";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
