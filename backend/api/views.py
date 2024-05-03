@@ -47,6 +47,29 @@ def save_pdf(request, id_conslt):
     plain_message = strip_tags(html_message)
     to = email
     send_mail(subject, plain_message, from_email, [to], html_message=html_message)"""
+from django.http import FileResponse
+from django.http import FileResponse, JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+import os
+def serve_pdf(request, filename):
+    try:
+        # Construire le chemin complet du fichier PDF
+        pdf_path = os.path.abspath(os.path.join(settings.BASE_DIR, 'bilans', filename))
+        # Vérifier si le fichier existe
+        if os.path.exists(pdf_path):
+            # Ouvrir le fichier en mode lecture binaire
+            with open(pdf_path, 'rb') as f:
+                # Renvoyer le contenu du fichier en tant que réponse HTTP avec le bon type de contenu
+                response = HttpResponse(f.read(), content_type='application/pdf')
+                return response
+        else:
+            # Si le fichier n'existe pas, renvoyer une réponse 404
+            return HttpResponse(status=404)
+    except Exception as e:
+        # Gérer les autres erreurs et renvoyer une réponse d'erreur
+        return HttpResponse(status=500)
+
 
 @require_http_methods(["GET"])
 def get_patient_info(request, patient_id):

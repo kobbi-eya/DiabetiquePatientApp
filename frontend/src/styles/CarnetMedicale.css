@@ -5,7 +5,7 @@
 }
 
 nav {
-    background: linear-gradient(to bottom right, rgba(196, 2, 212, 0.67), rgba(31, 223, 217, 0.67));
+    background: linear-gradient(to bottom right, rgba(2, 163, 212, 0.67), rgba(172, 187, 203, 0.67));
     color: #ffffff;
     text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.3); 
     padding: 10px;
@@ -32,7 +32,7 @@ nav li {
     padding: 20px;
     margin-top: 10px;
     margin-left: 10px;
-    color: #47194E;
+    color: #175a70;
 }
 
 .tab-widget {
@@ -56,16 +56,16 @@ nav li {
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 5px 5px 0 0;
-    background-color: #b649cbe3;
+    background-color: #7a96cbe3;
     margin-right: 5px;
     color: #ffffff; /* Ajouter une couleur de texte */
     border-color: #6ba7d7;
 }
 
 .tab.active {
-    background-color: #289dc3;
-    border-bottom: 3px solid #9679d1;
-    border-color: #d6affe;
+    background-color: #3c74c2;
+    border-bottom: 3px solid #5460ae;
+    border-color: #307abf;
 }
 
 .tab-content {

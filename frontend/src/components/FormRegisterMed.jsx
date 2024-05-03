@@ -118,7 +118,7 @@ const FormRegisterMed = () => {
           </div>
           <div className="right_registmed">
             <label className='label_registmed'>
-              Spécialiste:
+              Spécialité
               <input className='input_registmed' 
                 type="text"
                 id="specialite"

@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.urls import path,include
 #from api.views import UserLoginAPI
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
-from api.views import    get_patient_info, get_patient_par_medecin , save_pdf,  update_patient
+from api.views import    get_patient_info, get_patient_par_medecin , save_pdf, serve_pdf,  update_patient
 from api.authentification import user_login
 from api.Registration import register_medecin, register_patient_by_medecin
 from api.ChangementRequest import accept_change_request, change_doctor_request, get_change_requests_for_patient, get_pending_change_requests,  reject_change_request
@@ -16,6 +16,7 @@ from api.consultation import delete_consultation, get_consultation_detail,update
 from api import views
 
 urlpatterns = [
+   
     path('api/user/patientReg/<int:idmedId>',register_patient_by_medecin, name='register_patient_by_medecin'),  
     path('api/user/createRv/<int:idmedId>', create_rendez_vous , name='create_rendez_vous'),
     path('api/medecin/rendez-vous/<int:idmed_id>/', rendez_vous_medecin, name='rendez_vous_medecin'),

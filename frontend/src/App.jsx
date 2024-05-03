@@ -19,7 +19,6 @@ import Agenda from "./components/AgendaPatient"
 
 
 
-
 //function RegisterAndLogout() {
   //localStorage.clear()
   //return <Register />
@@ -46,6 +45,7 @@ function App() {
     </ProtectedRoute>
       }
     />
+       
         <Route path="/login" element={<Login />} />
         <Route path="/home_patient/:patientId" element={<HomePatient />} />
         <Route path="/login/registerpatient/:medecinId" element={<RegisterPatient />} />

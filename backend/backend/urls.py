@@ -7,8 +7,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 from api.authentification import user_login
 from api.Registration import register_medecin, register_patient_by_medecin
 from api.ChangementRequest import accept_change_request, change_doctor_request, get_change_requests_for_patient, get_pending_change_requests,  reject_change_request
+from api.views import serve_pdf
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('bilans/<str:filename>', serve_pdf, name='serve_pdf'),
   #  path("api/user/login/", UserLoginAPI.as_view(),name="login"),
     path("api/token/", TokenObtainPairView.as_view() ,name="get_token"),
     path("api/token/refresh/", TokenRefreshView.as_view() ,name="refresh"),

@@ -9,6 +9,7 @@ import api from "../api";
 import TabWidget from '../pages/TabWidget'; // Assurez-vous que le chemin d'importation est correct
 
 function CarnetMedical() {
+  
   const { patientId } = useParams();
   const [patientInfo, setPatientInfo] = useState(null);
   const [consultations, setConsultations] = useState([]);
@@ -18,6 +19,7 @@ function CarnetMedical() {
     taille: '',
     allergies: ''
   });
+  const [selectedConsultation, setSelectedConsultation] = useState(null);
 
   useEffect(() => {
     // Appels à l'API pour récupérer les informations du patient
@@ -36,12 +38,14 @@ function CarnetMedical() {
     api.get(`http://localhost:8000/api/consultations/${patientId}/`)
       .then((res) => {
         setConsultations(res.data.consultations);
+        
       })
       .catch((error) => {
         console.error('Error fetching patient consultations:', error);
       });
-    
   };
+  
+  
   
   const handleEditClick = () => {
     setIsEditing(true);
@@ -70,8 +74,12 @@ function CarnetMedical() {
   useEffect(() => {
     handleshowConsultations();
   }, []);
-  
 
+  const handleConsultationClick = (consultation) => {
+    setSelectedConsultation(consultation);
+
+  };
+  
   if (!patientInfo) {
     return <div>Loading...</div>;
   }
@@ -117,18 +125,26 @@ function CarnetMedical() {
 
           <div label="Consultations">
             <div className="consultations-container">
-            {consultations.map((consultation) => (
-          <div key={consultation.id} className="consultation">
-            <p>Date de consultation: {consultation.date_consultation}</p>
-            <p>Heure de consultation: {consultation.heure_consultation}</p>
-            <p>Ordonnance: {consultation.ordonnance}</p>
-            <p>Description: {consultation.description}</p>
-            <p>Bilan: {consultation.bilan}</p>
-            <p>Médecin: {consultation.medecin}</p>
-            {/* Ajoutez ici d'autres informations de consultation si nécessaire */}
-          </div>
-            ))}
+            {consultations.map((consultation, index) => (
+                <button key={consultation.id} onClick={() => setSelectedConsultation(consultation)}>{`Consultation ${index + 1}`}</button>
+      
+              ))}
             </div>
+            {selectedConsultation && (
+              <div className="selected-consultation">
+                <h2>Consultation sélectionnée</h2>
+                <p>Date de consultation: {selectedConsultation.date_consultation}</p>
+                <p>Heure de consultation: {selectedConsultation.heure_consultation}</p>
+                <p>Ordonnance: {selectedConsultation.ordonnance}</p>
+                <p>Description: {selectedConsultation.description}</p>
+                <p>Bilan: {selectedConsultation.bilan}</p>
+                <p>Médecin: {selectedConsultation.medecin}</p>
+                <p>Bilan PDF: {selectedConsultation.bilan_pdf ? <a href={`http://localhost:8000${selectedConsultation.bilan_pdf}`} target="_blank" rel="noopener noreferrer">Voir le PDF</a> : "Aucun fichier PDF disponible"}</p>
+                
+
+                {/* Ajoutez ici d'autres informations de consultation si nécessaire */}
+              </div>
+            )}
           </div>
         </TabWidget>
       </div>

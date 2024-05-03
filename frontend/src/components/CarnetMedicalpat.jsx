@@ -74,7 +74,7 @@ function CarnetMedicalpat() {
                 <p>Ordonnance: {selectedConsultation.ordonnance}</p>
                 <p>Description: {selectedConsultation.description}</p>
                 <p>Bilan: {selectedConsultation.bilan}</p>
-                <p>Bilan PDF: <a href={selectedConsultation.bilan_pdf} target="_blank" rel="noopener noreferrer">Voir le PDF</a></p>
+                <p>Bilan PDF: {selectedConsultation.bilan_pdf ? <a href={`http://localhost:8000${selectedConsultation.bilan_pdf}`} target="_blank" rel="noopener noreferrer">Voir le PDF</a> : "Aucun fichier PDF disponible"}</p>
               </div>
             )}
           </div>
